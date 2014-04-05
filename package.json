@@ -1,0 +1,30 @@
+{
+  "name": "wit-cms",
+  "description": "A file-based blog-aware content-management system.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Chris Allen Lane",
+    "email": "chris@chris-allen-lane.com"
+  },
+  "dependencies": {
+    "async": "0.2.10",
+    "json-front-matter": "0.1.4",
+    "marked": "0.3.1",
+    "moment": "2.5.1",
+    "truncatise": "0.0.2"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "0.9.2",
+    "grunt-mocha-test": "0.10.0",
+    "mocha": "1.18.2",
+    "should": "2"
+  },
+  "keywords": [
+    "blog", "cms"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/chrisallenlane/wit-cms"
+  },
+  "main": "index"
+}
