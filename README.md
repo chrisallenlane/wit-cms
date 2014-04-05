@@ -16,15 +16,15 @@ including:
 - "pages" and "posts"
 - tag, category, and archive taxonomies
 - canonical URLs 
-- sitemap.xml
+- `sitemap.xml`
 - an RSS feed
 - "read more" links and pagination
 
 On application start, `wit` loads all site content into an in-memory object,
 making it possible to serve content without reading from disk. This makes it
-rather performent when compared to database-backed content-management systems.
+rather performant when compared to database-backed content-management systems.
 
-`wit` seeks to offer a compromise between the full-featuredness of Wordpress
+`wit` seeks to offer a compromise between the full-featuredness of WordPress
 and the ultra-minimalism of [Jekyll][], and strives to be a viable alternative
 to those who may be dissatisfied with either.
 
@@ -57,8 +57,8 @@ URL would be `/blog/post/hello-world`.
 Front-matter
 ------------
 As with Jekyll, `wit` reads page and post metadata (title, date, author,
-categories, tags, etc) out of front-matter embedded within each post or page via
-the `[json-front-matter][]` module.
+categories, tags, etc) out of front-matter embedded within each post or page
+via the [json-front-matter][] module.
 
 For example, all posts should contain a header like the following:
 
@@ -219,7 +219,7 @@ var config = {
     author  : 'John Doe',
     fqdn    : 'https://example.com',
     name    : 'The Example.com Blog',
-    tagLine : '',
+    tagLine : 'An exemplary blog.',
   },
   
   // page configs
@@ -270,7 +270,7 @@ a [Google Custom Search Engine][gcse] instead.
 Security
 --------
 `wit` neither implements administrative access controls, nor requires a
-database backend. As such, it is immune to many classes of attacks to which
+database back-end. As such, it is immune to many classes of attacks to which
 other content-management systems may be vulnerable.
 
 It is not "hack proof", however. Its attack-surface consists (at least) of:
@@ -289,7 +289,7 @@ Known Issues
   don't anticipate that this will cause problems for most users, and thus am
   not planning on addressing this issue at this time.
 
-- Unit tests are currently a bit of a farse. I do plan to remedy this in the
+- Unit tests are currently a bit of a farce. I do plan to remedy this in the
   future as time permits.
 
 
