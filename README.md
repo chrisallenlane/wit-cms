@@ -58,7 +58,7 @@ Front-matter
 ------------
 As with Jekyll, `wit` reads page and post metadata (title, date, author,
 categories, tags, etc) out of front-matter embedded within each post or page via
-the [`json-front-matter`][] module.
+the `[json-front-matter][]` module.
 
 For example, all posts should contain a header like the following:
 
@@ -111,6 +111,7 @@ wit {
   tags       : { /* posts */ },
   categories : { /* posts */ },
 }
+```
 
 For example: 
 
