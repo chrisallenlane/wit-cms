@@ -196,7 +196,7 @@ post: {
 And a page object takes the following shape:
 
 ```javascript
-post: {
+page: {
   title   : 'The Page Name',
   name    : 'the-page-name',
   url     : '/the-page-name',
