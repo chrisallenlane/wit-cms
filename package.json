@@ -1,7 +1,7 @@
 {
   "name": "wit-cms",
   "description": "A file-based blog-aware content-management system for Express.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": {
     "name": "Chris Allen Lane",
     "email": "chris@chris-allen-lane.com"
