@@ -52,7 +52,7 @@ posts live in `<app root>/posts/`.
 
 Page and post urls will be generated based off of the filename of the
 corresponding markdown file. For example, the source markdown for a "Hello
-World" blog post should be saved to `<app root>/posts/hello-world.md`, and it's
+World" blog post should be saved to `<app root>/posts/hello-world.md`, and its
 URL would be `/blog/post/hello-world`.
 
 
