@@ -92,9 +92,10 @@ Routes
 - `/:pageName`
 - `/blog`
 - `/blog/post/:postName`
+- `/blog/category`
 - `/blog/category/:postName`
+- `/blog/tag`
 - `/blog/tag/:postName`
-- `/blog/archive/`
 - `/blog/archive/:year`
 - `/blog/archive/:year/:month`
 - `/blog/archive/:year/:month/:day`
