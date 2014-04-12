@@ -25,12 +25,11 @@ module.exports = function(wit, callback) {
       var post = {};
       
       // parse out the postname
-      // @todo: support the .markdown extension
       var extension = path.extname(file);
       post.name     = path.basename(file, extension);
       
       // ignore non-markdown files
-      if (extension === '.md') {
+      if (['markdown', '.md'].indexOf(extension)) {
         // assemble what will be the post's URL
         post.url  = '/blog/post/' + post.name;
 

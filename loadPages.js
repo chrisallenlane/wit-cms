@@ -14,12 +14,11 @@ module.exports = function(wit, callback) {
       var page = {};
       
       // parse out the page name
-      // @todo: support the .markdown extension
       var extension = path.extname(file);
       page.name     = path.basename(file, extension);
       
       // ignore non-markdown files
-      if (extension === '.md') {
+      if (['markdown', '.md'].indexOf(extension)) {
         // assemble what will be the pages's URL
         page.url  = '/' + page.name;
 
