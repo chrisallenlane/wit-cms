@@ -178,15 +178,8 @@ module.exports.init = function(app, configs, callback) {
 
     // done
     function(err, results) {
-      // pass locals into the template
-      wit.app.locals({
-        archive    : wit.archive,
-        categories : wit.categories,
-        config     : wit.config,
-        site       : wit.config.site,
-        tags       : wit.tags,
-      });
-
+      // expose the wit object to the templates
+      wit.app.locals({ wit : wit });
       callback(err, wit);
     }
   );
