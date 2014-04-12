@@ -26,57 +26,60 @@ module.exports = function(wit, callback) {
       
       // parse out the postname
       // @todo: support the .markdown extension
-      // @todo: ignore non-markdown files
-      post.name = path.basename(file, '.md');
-
-      // assemble what will be the post's URL
-      post.url  = '/blog/post/' + post.name;
-
-      // read the file
-      post.raw = fs.readFileSync(config.posts.dir + file, 'utf8');
-
-      // parse out the post body
-      var contents  = fm.parse(post.raw);
-      post.markdown = contents.body;
+      var extension = path.extname(file);
+      post.name     = path.basename(file, extension);
       
-      // parse out the front-matter
-      for (var attr in contents.attributes) {
-        post[attr] = contents.attributes[attr];
+      // ignore non-markdown files
+      if (extension === '.md') {
+        // assemble what will be the post's URL
+        post.url  = '/blog/post/' + post.name;
+
+        // read the file
+        post.raw = fs.readFileSync(config.posts.dir + file, 'utf8');
+
+        // parse out the post body
+        var contents  = fm.parse(post.raw);
+        post.markdown = contents.body;
+        
+        // parse out the front-matter
+        for (var attr in contents.attributes) {
+          post[attr] = contents.attributes[attr];
+        }
+
+        // format the date post
+        if (post.date) {
+          var m = moment(post.date, config.dateFormat);
+          post.date = {
+            datetime : m.format(),
+            day      : m.format('DD'),
+            month    : m.format('MM'),
+            // @todo: this should be configurable 
+            pretty   : m.format('D MMMM YYYY'),
+            unix     : m.format('X'),
+            year     : m.format('YYYY'),
+          };
+        }
+
+        // render the markdown
+        post.content = marked(post.markdown);
+
+        // Search for the "Read More" separator among the post content. If it's
+        // there, split the excerpt there. Otherwise, default to chopping at the
+        // configured point.
+        var readMorePos = post.content.indexOf(config.readMoreSeparator);
+        if (readMorePos > 0) {
+          post.excerpt = post.content.substr(0, readMorePos);
+        } else {
+          post.excerpt = truncatise(post.content, truncateOptions);
+        }
+        
+        // free some memory
+        delete post.markdown;
+        delete post.raw;
+
+        // buffer the post
+        posts[post.name] = post;
       }
-
-      // format the date post
-      if (post.date) {
-        var m = moment(post.date, config.dateFormat);
-        post.date = {
-          datetime : m.format(),
-          day      : m.format('DD'),
-          month    : m.format('MM'),
-          // @todo: this should be configurable 
-          pretty   : m.format('D MMMM YYYY'),
-          unix     : m.format('X'),
-          year     : m.format('YYYY'),
-        };
-      }
-
-      // render the markdown
-      post.content = marked(post.markdown);
-
-      // Search for the "Read More" separator among the post content. If it's
-      // there, split the excerpt there. Otherwise, default to chopping at the
-      // configured point.
-      var readMorePos = post.content.indexOf(config.readMoreSeparator);
-      if (readMorePos > 0) {
-        post.excerpt = post.content.substr(0, readMorePos);
-      } else {
-        post.excerpt = truncatise(post.content, truncateOptions);
-      }
-      
-      // free some memory
-      delete post.markdown;
-      delete post.raw;
-
-      // buffer the post
-      posts[post.name] = post;
     });
 
     callback(err, posts);

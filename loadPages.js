@@ -15,33 +15,36 @@ module.exports = function(wit, callback) {
       
       // parse out the page name
       // @todo: support the .markdown extension
-      // @todo: ignore non-markdown files
-      page.name = path.basename(file, '.md');
+      var extension = path.extname(file);
+      page.name     = path.basename(file, extension);
       
-      // assemble what will be the pages's URL
-      page.url  = '/' + page.name;
+      // ignore non-markdown files
+      if (extension === '.md') {
+        // assemble what will be the pages's URL
+        page.url  = '/' + page.name;
 
-      // read the file
-      page.raw = fs.readFileSync(config.pages.dir + file, 'utf8');
+        // read the file
+        page.raw = fs.readFileSync(config.pages.dir + file, 'utf8');
 
-      // parse out the page body
-      var contents  = fm.parse(page.raw);
-      page.markdown = contents.body;
-      
-      // parse out the front-matter
-      for (var attr in contents.attributes) {
-        page[attr] = contents.attributes[attr];
+        // parse out the page body
+        var contents  = fm.parse(page.raw);
+        page.markdown = contents.body;
+        
+        // parse out the front-matter
+        for (var attr in contents.attributes) {
+          page[attr] = contents.attributes[attr];
+        }
+
+        // render the markdown
+        page.content = marked(page.markdown);
+        
+        // free some memory
+        delete page.markdown;
+        delete page.raw;
+
+        // buffer the page
+        pages[page.name] = page;
       }
-
-      // render the markdown
-      page.content = marked(page.markdown);
-      
-      // free some memory
-      delete page.markdown;
-      delete page.raw;
-
-      // buffer the page
-      pages[page.name] = page;
     });
 
     callback(err, pages);
