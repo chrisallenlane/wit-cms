@@ -6,13 +6,6 @@ module.exports.init = function(app, configs, callback) {
   var wit = {
     app    : app,
     config : {
-      // site configs
-      site: {
-        author  : configs.site.author  || '',
-        fqdn    : configs.site.fqdn    || '',
-        name    : configs.site.name    || '',
-        tagLine : configs.site.tagLine || '',
-      },
       
       // page configs
       pages: {
@@ -34,6 +27,9 @@ module.exports.init = function(app, configs, callback) {
       readMoreSeparator : configs.readMoreSeparator || '<!--more-->',
     },
   };
+
+  // accept arbitrary parameters through configs.site
+  wit.config.site = configs.site;
 
   // sorts posts in descending chronological order
   wit.sort = function (posts) {
