@@ -121,32 +121,32 @@ For example:
 ```javascript
 wit {
   pages: {
-    about     : aPageObject,
-    contact   : aPageObject,
-    portfolio : aPageObject,
+    "about"     : aPageObject,
+    "contact"   : aPageObject,
+    "portfolio" : aPageObject,
   },
 
   posts: {
-    website-redesign : aPostObject,
-    blogging-in-node : aPostObject,
-    wit-vs-wordpress : aPostObject,
+    "website-redesign" : aPostObject,
+    "blogging-in-node" : aPostObject,
+    "wit-vs-wordpress" : aPostObject,
   },
 
   archive: {
     2013: {
       12: {
         31: {
-          website-redesign : aPostObject,
+          "website-redesign" : aPostObject,
         }
       }
     }
     2014: {
       01: {
         07: {
-          blogging-in-node : aPostObject,
+          "blogging-in-node" : aPostObject,
         }
         14: {
-          wit-vs-wordpress : aPostObject,
+          "wit-vs-wordpress" : aPostObject,
         }
       }
     }
@@ -154,21 +154,21 @@ wit {
 
   tags: {
     meta: {
-      website-redesign : aPostObject,
+      "website-redesign" : aPostObject,
     }
     express: {
-      blogging-in-node : aPostObject,
-      wit-vs-wordpress : aPostObject,
+      "blogging-in-node" : aPostObject,
+      "wit-vs-wordpress" : aPostObject,
     }
   },
 
   categories: {
     announcements: {
-      website-redesign : aPostObject,
+      "website-redesign" : aPostObject,
     }
     node: {
-      blogging-in-node : aPostObject,
-      wit-vs-wordpress : aPostObject,
+      "blogging-in-node" : aPostObject,
+      "wit-vs-wordpress" : aPostObject,
     }
   }
 }
