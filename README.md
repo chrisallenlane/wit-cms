@@ -183,11 +183,11 @@ post: {
   url     : '/blog/post/the-post-name',
   content : '<p>Rendered markdown content.</p>',
   date    : {
-    datetime : '',
+    datetime : '2012-09-12T00:00:00-04:00',
     day      : '02',
     month    : '04',
-    pretty   : '02 April 2014',
-    unix     : '',
+    pretty   : '2 April 2014',
+    unix     : '1396411200',
     year     : '2014',
   },
 }
@@ -259,6 +259,11 @@ wit.init(app, config, function(err, wit) {
 
 ```
 
+Note that aribitrary properties may be attached to the `config.site`
+property, and will be made available within templates as page locals. If
+`config.site.foo` was initialized to `"bar"`, the value `"bar"` would be
+accessible within a page template with `<%= site.foo %>`.
+
 
 Searching
 ---------
@@ -270,6 +275,14 @@ Until that capability is implemented natively, however, you may consider using
 a [Google Custom Search Engine][gcse] instead.
 
 
+Commenting
+----------
+Because `wit` stores its content in flat files instead of a database, it does
+not and can not natively support a reader commeting system. If you'd like to
+enable commenting on your blog, consider using a third-party service provider
+like [Disqus][].
+
+
 Security
 --------
 `wit` neither implements administrative access controls, nor requires a
@@ -278,8 +291,9 @@ other content-management systems may be vulnerable.
 
 It is not "hack proof", however. Its attack-surface consists (at least) of:
 
-1. Inputs that write to the DOM (search boxes, URLs, etc).
-2. The attack-surface of nodejs itself.
+1. Inputs that write to the DOM (search boxes, URLs, etc)
+2. The attack-surface of Express
+3. The attack-surface of nodejs
 
 With that said, it is important to use a templating engine (ejs, hogan, etc.)
 when authoring views. Likewise - though this should go without saying - the
@@ -320,6 +334,7 @@ License
 `wit` is released under the MIT license. See `LICENSE.txt` for details. 
 
 
+[Disqus]:            http://disqus.com/
 [Express]:           http://expressjs.com/
 [Jekyll]:            http://jekyllrb.com/
 [gcse]:              https://www.google.com/cse/
