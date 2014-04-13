@@ -19,6 +19,13 @@ module.exports = function(wit, callback) {
 
   // load the posts
   fs.readdir(config.posts.dir, function(err, files) {
+
+    // fail gracefully if posts are not present
+    if (err && err.code === 'ENOENT') {
+      console.warn(config.posts.dir + 'does not exist. Skipping posts.');
+      return callback(null, {});
+    }
+
     // iterate over each file
     files.forEach(function(file) {
       // assemble the post object

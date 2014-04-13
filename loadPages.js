@@ -8,6 +8,13 @@ module.exports = function(wit, callback) {
 
   //fs.readdir(this.config.pagesDir, function(err, files) {
   fs.readdir(config.pages.dir, function(err, files) {
+
+    // fail gracefully if pages are not present
+    if (err && err.code === 'ENOENT') {
+      console.warn(config.pages.dir + 'does not exist. Skipping pages.');
+      return callback(null, {});
+    }
+
     // iterate over each file
     files.forEach(function(file) {
       // assemble the page object
@@ -46,6 +53,6 @@ module.exports = function(wit, callback) {
       }
     });
 
-    callback(err, pages);
+    return callback(err, pages);
   });
 };

@@ -1,7 +1,7 @@
 {
   "name": "wit-cms",
   "description": "A file-based blog-aware content-management system for Express.",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "author": {
     "name": "Chris Allen Lane",
     "email": "chris@chris-allen-lane.com"
@@ -34,10 +34,10 @@
     "url": "https://github.com/chrisallenlane/wit-cms/issues"
   },
   "homepage": "https://github.com/chrisallenlane/wit-cms",
-  "_id": "wit-cms@1.1.1",
+  "_id": "wit-cms@2.0.0",
   "dist": {
-    "shasum": "94f9e272809ee951117f2fc85f998bfd9ce3d06e"
+    "shasum": "9f8639b16634582ecc5602b29376e3b520646aec"
   },
-  "_from": "wit-cms@1.1.1",
-  "_resolved": "https://registry.npmjs.org/wit-cms/-/wit-cms-1.1.1.tgz"
+  "_from": "wit-cms@2.0.0",
+  "_resolved": "https://registry.npmjs.org/wit-cms/-/wit-cms-2.0.0.tgz"
 }
