@@ -6,6 +6,7 @@ module.exports = function(grunt) {
       options: {
         esnext   : true,
         loopfunc : true,
+        laxbreak : true,
       },
 
       all: [
@@ -25,7 +26,6 @@ module.exports = function(grunt) {
     },
   });
 
-  //grunt.registerTask('default', [ 'jshint', 'mochaTest' ]);
   grunt.registerTask('default', [ 'jshint', 'mochaTest' ]);
 
   // load the grunt modules

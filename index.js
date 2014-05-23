@@ -6,6 +6,9 @@ module.exports.init = function(app, configs, callback) {
   var wit = {
     app    : app,
     config : {
+
+      // path at which data may be retrieved asynchronously
+      asyncRoot: configs.asyncRoot || '/async/',
       
       // page configs
       pages: {
@@ -52,7 +55,7 @@ module.exports.init = function(app, configs, callback) {
   };
 
   // generates "next/previous" navigation
-  // @kludge: I must have solved this the most convoluted way possible...
+  // @kludge: I must have solved this in the most convoluted way possible...
   wit.nextPrev = function (posts, page) {
     page         = Number(page);
     page         = (page >= 1) ? (page - 1) : 0;
@@ -81,6 +84,7 @@ module.exports.init = function(app, configs, callback) {
   var loadSitemapRoute   = require('./loadSitemapRoute');
   var loadTagRoutes      = require('./loadTagRoutes');
   var loadTags           = require('./loadTags');
+  var loadAsyncRoutes    = require('./loadAsyncRoutes');
 
   // bootstrap the app
   async.series(
@@ -145,7 +149,6 @@ module.exports.init = function(app, configs, callback) {
           callback(err, true);
         });
       },
-
       
       // create the tag routes
       function (callback) {
@@ -171,6 +174,13 @@ module.exports.init = function(app, configs, callback) {
       // create the sitemap
       function (callback) {
         loadSitemapRoute(wit, function(err) {
+          callback(err, true);
+        });
+      },
+      
+      // create the data routes
+      function (callback) {
+        loadAsyncRoutes(wit, function(err) {
           callback(err, true);
         });
       },

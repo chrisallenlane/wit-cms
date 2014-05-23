@@ -13,6 +13,7 @@ appropriate directories. `wit` will generate everything else automatically,
 including:
 
 - routes
+- "async" routes
 - "pages" and "posts"
 - tag, category, and archive taxonomies
 - canonical URLs 
@@ -99,6 +100,22 @@ Routes
 - `/blog/archive/:year`
 - `/blog/archive/:year/:month`
 - `/blog/archive/:year/:month/:day`
+
+It will additionally create "async" routes by which properties of the `wit`
+object (pages, posts, etc), may be fetched asynchronously. By default, the
+following routes are created automatically:
+
+- `/async/config`
+- `/async/pages/:title?`
+- `/async/posts/:title?`
+- `/async/categories/:category?`
+- `/async/tags/:tag?`
+- `/async/archive/:year?/:month?/:day?`
+
+Querying asynchronously to the above routes will simply return the appropriate
+member of the `wit` object as it exists on the server-side. For example,
+querying to `/async/pages` will return the `wit.pages` object. Querying to
+`/async/pages/a-page-title` will return that page specifically.
 
 
 Objects
@@ -217,6 +234,10 @@ application. It may be configured and invoked thusly:
 // ...
 
 var config = {
+
+  // the async route path prefix
+  asyncRoot: '/async/',
+
   // site configs
   site: {
     author  : 'John Doe',
