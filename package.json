@@ -7,6 +7,16 @@
     "name": "Chris Allen Lane",
     "email": "chris@chris-allen-lane.com"
   },
+  "scripts": {
+    "test": "mocha --recursive --reporter spec",
+    "lint": "./node_modules/.bin/jshint . --exclude=/node_modules"
+  },
+  "jshintConfig": {
+    "esnext": true,
+    "expr": true,
+    "laxbreak": true,
+    "loopfunc": true
+  },
   "dependencies": {
     "async": "0.2.10",
     "json-front-matter": "0.1.4",
@@ -15,8 +25,7 @@
     "truncatise": "0.0.2"
   },
   "devDependencies": {
-    "grunt-contrib-jshint": "0.9.2",
-    "grunt-mocha-test": "0.10.0",
+    "jshint": "2.7.0",
     "mocha": "1.18.2",
     "should": "2"
   },
