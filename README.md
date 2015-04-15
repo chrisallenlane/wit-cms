@@ -5,6 +5,8 @@ designed for those who want WordPress-like functionality without the heft (and
 attack surface) of a WordPress installation. It emphasizes simplicity,
 security, and performance.
 
+[![Build Status](https://travis-ci.org/chrisallenlane/wit-cms.svg)](https://travis-ci.org/chrisallenlane/wit-cms)
+
 
 Overview
 --------
