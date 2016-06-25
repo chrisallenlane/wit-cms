@@ -1,0 +1,17 @@
+<rss version="2.0">
+  <channel>
+    <title><%= wit.params.name %></title>
+    <description><%= wit.params.tagLine %></description>
+    <link><%= wit.params.fqdn %></link>
+    <lastBuildDate><%= page.date.pubDate %></lastBuildDate>
+    <pubDate><%= page.date.pubDate %></pubDate>
+    <% page.content.forEach(function(post) { %>
+    <item>
+      <title><%= post.title %></title>
+      <description><%= post.description || post.excerpt %></description>
+      <link><%= wit.params.fqdn + post.url %></link>
+      <pubDate><%= post.date.datetime %></pubDate>
+    </item>
+    <% }); %>
+  </channel>
+</rss>

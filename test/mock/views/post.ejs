@@ -1,0 +1,13 @@
+<html>
+  <head>
+    <title><%= post.title %></title>
+    <meta name='view' content='post'>
+    <meta name='description' content='<%= post.description %>'>
+    <link rel='canonical' href='<%= post.url %>'>
+  </head>
+  <body>
+      <h1><%= post.name %></h1>
+
+      <p><%- post.content %></p>
+  </body>
+</html>

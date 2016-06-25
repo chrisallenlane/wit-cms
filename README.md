@@ -1,12 +1,13 @@
+[![Build Status](https://travis-ci.org/chrisallenlane/wit-cms.svg)](https://travis-ci.org/chrisallenlane/wit-cms)
+[![npm](https://img.shields.io/npm/v/wit-cms.svg)]()
+[![npm](https://img.shields.io/npm/dt/wit-cms.svg)]()
+
 wit
 ===
-`wit` is a flat-file "blog aware" publishing platform for [Express][]. It's
-designed for those who want WordPress-like functionality without the heft (and
-attack surface) of a WordPress installation. It emphasizes simplicity,
+`wit` is a flat-file, "blog aware", publishing platform for [Express][]. It's
+designed for those who want WordPress-like functionality without the heft and
+attack-surface of a WordPress installation. It emphasizes simplicity,
 security, and performance.
-
-[![Build Status](https://travis-ci.org/chrisallenlane/wit-cms.svg)](https://travis-ci.org/chrisallenlane/wit-cms)
-
 
 Overview
 --------
@@ -14,18 +15,16 @@ Page and post content is declared by creating markdown files within the
 appropriate directories. `wit` will generate everything else automatically,
 including:
 
-- routes
-- "async" routes
-- "pages" and "posts"
-- tag, category, and archive taxonomies
-- canonical URLs 
-- `sitemap.xml`
+- express routes (both sync and async)
+- "pages" and "posts" (with "read more" links and pagination)
+- "tag" and "category" taxonomies
+- blog search and archive
+- a `sitemap.xml`
 - an RSS feed
-- "read more" links and pagination
 
 On application start, `wit` loads all site content into an in-memory object,
-making it possible to serve content without reading from disk. This makes it
-rather performant when compared to database-backed content-management systems.
+making it possible to serve content without reading a disk. This makes it
+faster than traditional database-backed content-management systems.
 
 `wit` seeks to offer a compromise between the full-featuredness of WordPress
 and the ultra-minimalism of [Jekyll][], and strives to be a viable alternative
@@ -50,40 +49,43 @@ Creating Content
 In order to create a "post" (a blog entry) or a "page" (content that exists
 outside of the blog context), simply create a markdown file of the appropriate
 name, and in the appropriate location. By default, markdown files that source
-page content live in `<app root>/pages/`, and markdown files that source blog
-posts live in `<app root>/posts/`.
+page content live in `<webroot>/pages/`, and markdown files that source blog
+posts live in `<webroot>/posts/`.
 
 Page and post urls will be generated based off of the filename of the
 corresponding markdown file. For example, the source markdown for a "Hello
-World" blog post should be saved to `<app root>/posts/hello-world.md`, and its
+World" blog post should be saved to `<webroot>/posts/hello-world.md`, and its
 URL would be `/blog/post/hello-world`.
 
 
 Front-matter
 ------------
 As with Jekyll, `wit` reads page and post metadata (title, date, author,
-categories, tags, etc) out of front-matter embedded within each post or page
+categories, tags, etc.) out of front-matter embedded within each post or page
 via the [json-front-matter][] module.
 
 For example, all posts should contain a header like the following:
 
 ```javascript
 {{{
-"title"      : "Hello World (of node blogging)",
-"author"     : "Chris Allen Lane",
-"categories" : ["node", "blogging"],
-"tags"       : ["javascript", "express"],
-"date"       : "2012-09-15"
+"title"       : "Hello World (of node blogging)",
+"description" : "The post description."
+"author"      : "John Doe",
+"categories"  : [ "node", "blogging" ],
+"tags"        : [ "javascript", "express" ],
+"date"        : "2012-09-15"
 }}}
 ```
 Pages will have a similar, but sparser, header: 
 
 ```javascript
 {{{
-"title"      : "About Me",
-"author"     : "Chris Allen Lane"
+"title"       : "About Me",
+"author"      : "John Doe"
+"description" : "The page description."
 }}}
 ```
+
 All properties specified in front-matter will be made available to the
 corresponding rendered views as page locals. 
 
@@ -92,50 +94,38 @@ Routes
 ------
 `wit` automatically generates the following routes:
 
-- `/:pageName`
-- `/blog`
-- `/blog/post/:postName`
-- `/blog/category`
-- `/blog/category/:postName`
-- `/blog/tag`
-- `/blog/tag/:postName`
-- `/blog/archive/:year`
-- `/blog/archive/:year/:month`
-- `/blog/archive/:year/:month/:day`
+### Synchronous ###
 
-It will additionally create "async" routes by which properties of the `wit`
-object (pages, posts, etc), may be fetched asynchronously. By default, the
-following routes are created automatically:
+- `/:page`
+- `/blog/`
+- `/blog/post/:name`
+- `/blog/category/:category`
+- `/blog/tag/:tag`
+- `/blog/archive/:year/:month?/:day?`
+- `/blog/search`
+- `/feed`
+- `/sitemap.xml`
 
-- `/async/config`
-- `/async/pages/:title?`
-- `/async/posts/:title?`
-- `/async/categories/:category?`
-- `/async/tags/:tag?`
-- `/async/archive/:year?/:month?/:day?`
+### asynchronous ###
 
-Querying asynchronously to the above routes will simply return the appropriate
-member of the `wit` object as it exists on the server-side. For example,
-querying to `/async/pages` will return the `wit.pages` object. Querying to
-`/async/pages/a-page-title` will return that page specifically.
+- `/async/pages`
+- `/async/pages/:page`
+- `/async/blog/`
+- `/async/blog/post/:name`
+- `/async/blog/category/:category`
+- `/async/blog/tag/:tag`
+- `/async/blog/archive/:year/:month?/:day?`
+- `/async/blog/search`
+- `/async/tags`
+- `/async/categories`
+- `/async/params`
 
+(The asyncronous routes return JSON responses.)
 
 Objects
 -------
-`wit` buffers all site content in a `wit` object on app init, which is
-structured as follows:
-
-```javascript
-wit {
-  pages      : { /* pages */ },
-  posts      : { /* posts */ },
-  archive    : { /* posts */ },
-  tags       : { /* posts */ },
-  categories : { /* posts */ },
-}
-```
-
-For example: 
+`wit` buffers all site content in a `wit` object. Here is an example of its
+structure:
 
 ```javascript
 wit {
@@ -151,159 +141,113 @@ wit {
     "wit-vs-wordpress" : aPostObject,
   },
 
-  archive: {
-    2013: {
-      12: {
-        31: {
-          "website-redesign" : aPostObject,
-        }
-      }
-    }
-    2014: {
-      01: {
-        07: {
-          "blogging-in-node" : aPostObject,
-        }
-        14: {
-          "wit-vs-wordpress" : aPostObject,
-        }
-      }
-    }
+  tags: [
+    'the-first-tag',
+    'the-second-tag',
+    'the-third-tag',
+    'etc',
+  ],
+
+  categories: [
+    'the-first-category',
+    'the-second-category',
+    'the-third-category',
+    'etc',
+  ],
+
+  params: {
+    // arbitrary params specified by user on initialization
   },
 
-  tags: {
-    meta: {
-      "website-redesign" : aPostObject,
-    }
-    express: {
-      "blogging-in-node" : aPostObject,
-      "wit-vs-wordpress" : aPostObject,
-    }
-  },
-
-  categories: {
-    announcements: {
-      "website-redesign" : aPostObject,
-    }
-    node: {
-      "blogging-in-node" : aPostObject,
-      "wit-vs-wordpress" : aPostObject,
-    }
-  }
 }
 ```
 
 Whereby a post object takes the following shape:
 
 ```javascript
-post: {
-  title   : 'The Post Name',
-  name    : 'the-post-name',
-  url     : '/blog/post/the-post-name',
-  content : '<p>Rendered markdown content.</p>',
-  date    : {
+ {
+  title      : 'The Post Name',
+  name       : 'the-post-name',
+  url        : '/blog/post/the-post-name',
+  author     : 'John Doe',
+  categories : [ 'foo', 'bar' ],
+  tags       : [ 'alpha', 'bravo', 'charlie' ],
+  date: {
     datetime : '2012-09-12T00:00:00-04:00',
     day      : '02',
     month    : '04',
-    pretty   : '2 April 2014',
+    pretty   : '2 April 2014', // user-configurable
     unix     : '1396411200',
     year     : '2014',
-  },
+  content: '<p>The page content.</p>',
 }
-
 ```
 
 And a page object takes the following shape:
 
 ```javascript
-page: {
-  title   : 'The Page Name',
-  name    : 'the-page-name',
-  url     : '/the-page-name',
-  content : '<p>Rendered markdown content.</p>',
+ {
+  title       : 'The Page Name',
+  name        : 'the-page-name',
+  url         : '/the-page-name',
+  author      : 'John Doe',
+  description : 'A descripton for the page.',
+  content     : '<p>The full page content.</p>'
 }
-
 ```
 
 
 Initializing
 ------------
-`wit` only implements one method - `init()` - which is used to initialize the
-application. It may be configured and invoked thusly:
+The `wit-cms` module will export a single function that will decorate an
+initialized Express app. Upon invokation, the function will also return a `wit`
+object that contains the entirety of the wit data.
 
 ```javascript
+const express = require('express');
+const path    = require('path');
+const Wit     = require('wit-cms');
+var app       = express();
 
-// ...
+// express configs
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
+// wit configs
 var config = {
 
-  // the async route path prefix
-  asyncRoot: '/async/',
-
-  // site configs
-  site: {
+  // template params
+  params: {
     author  : 'John Doe',
     fqdn    : 'https://example.com',
-    name    : 'The Example.com Blog',
-    tagLine : 'An exemplary blog.',
+    name    : 'Example Website',
+    tagLine : 'An example site made using wit-cms',
   },
   
-  // page configs
-  pages: {
-    // this is the directory from which "page" markdown will be read
-    dir: './pages/', 
-  },
-
-  // post configs
-  posts: {
-    // this is the directory from which "page" markdown will be read
-    dir      : './posts/',
-
-    // knobs regarding auto-excerpting. Excerpts are generating automatically
-    // if a post does not contain a "<!--more-->" tag (per the Wordpress
-    //  convention).
-    excerpt  : {
-      length : 1,
-
-      // units may be "paragraphs" or "words"
-      units  : 'paragraphs',
-    },
-
-    perPage : 5,
-  },
 };
 
-// init the app
-wit.init(app, config, function(err, wit) {
-  // You may continue to modify the express app here before the server starts
-}
+Wit(app, config, function(err, wit) {
 
-// ...
+  // continue building the express app here as desired
 
+});
 ```
 
-Note that aribitrary properties may be attached to the `config.site`
-property, and will be made available within templates as page locals. If
-`config.site.foo` was initialized to `"bar"`, the value `"bar"` would be
-accessible within a page template with `<%= site.foo %>`.
+Note that arbitrary properties may be attached to `config.params`.  These
+properties will be made available to page templates via the returned `wit`
+object as `wit.params`.
 
 
 Searching
 ---------
-`wit` does not currently provide an in-built solution for searching through
-site content, though it would be capable of doing so with some work. (This is
-something that I would like to implement in the future, time-permitting.)
-
-Until that capability is implemented natively, however, you may consider using
-a [Google Custom Search Engine][gcse] instead.
+`wit` provides for searching among blog posts via the [`lunr`][lunr] module.
 
 
 Commenting
 ----------
 Because `wit` stores its content in flat files instead of a database, it does
 not and can not natively support a reader commeting system. If you'd like to
-enable commenting on your blog, consider using a third-party service provider
-like [Disqus][].
+enable commenting on your blog, consider using [Disqus][] or [`isso`][isso].
 
 
 Security
@@ -314,13 +258,17 @@ other content-management systems may be vulnerable.
 
 It is not "hack proof", however. Its attack-surface consists (at least) of:
 
-1. Inputs that write to the DOM (search boxes, URLs, etc)
+1. Inputs that write to the DOM (search boxes, URLs, etc.)
 2. The attack-surface of Express
 3. The attack-surface of nodejs
 
-With that said, it is important to use a templating engine (ejs, hogan, etc.)
-when authoring views. Likewise - though this should go without saying - the
-`node` application should never be run as `root`.
+As a defense against [Cross-Site Scripting attacks][xss-owasp], `wit`
+internally relies on the [`xss`][xss] module to sanitize user inputs that may
+be written back to the DOM.  Regardless, it is still prudent to use a
+templating engine (`ejs`, `hogan`, etc.) when authoring views.
+
+Lastly - though this should go without saying - the `node` application should
+never be run as `root`.
 
 
 Known Issues
@@ -329,18 +277,16 @@ Known Issues
   don't anticipate that this will cause problems for most users, and thus am
   not planning on addressing this issue at this time.
 
-- Unit tests are currently a bit of a farce. I do plan to remedy this in the
-  future as time permits.
-
 
 License
 -------
 `wit` is released under the MIT license. See `LICENSE.txt` for details. 
 
-
 [Disqus]:            http://disqus.com/
 [Express]:           http://expressjs.com/
 [Jekyll]:            http://jekyllrb.com/
-[gcse]:              https://www.google.com/cse/
+[isso]:              https://github.com/posativ/isso
 [json-front-matter]: https://www.npmjs.org/package/json-front-matter
-[marked]:            https://www.npmjs.org/package/marked
+[lunr]:              https://www.npmjs.com/package/lunr
+[xss-owasp]:         https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
+[xss]:               https://www.npmjs.com/package/xss

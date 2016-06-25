@@ -1,37 +1,46 @@
 {
   "name": "wit-cms",
-  "version": "2.1.1",
+  "version": "3.0.0",
   "description": "A file-based blog-aware content-management system for Express.",
   "homepage": "https://github.com/chrisallenlane/wit-cms",
   "author": {
     "name": "Chris Allen Lane",
     "email": "chris@chris-allen-lane.com"
   },
+  "license" : "MIT",
   "scripts": {
-    "test": "mocha --recursive --reporter spec",
-    "lint": "./node_modules/.bin/jshint . --exclude=/node_modules"
+    "test": "tape 'test/*.js' | faucet",
+    "lint": "./node_modules/.bin/jshint . --exclude=/node_modules",
+    "snyk": "snyk test"
   },
   "jshintConfig": {
     "esnext": true,
-    "expr": true,
-    "laxbreak": true,
-    "loopfunc": true
+    "laxbreak": true
   },
   "dependencies": {
-    "async": "0.2.10",
-    "json-front-matter": "0.1.4",
-    "marked": "0.3.1",
-    "moment": "2.5.1",
-    "truncatise": "0.0.2"
+    "async": "2.0.0-rc.6",
+    "json-front-matter": "1.0.0",
+    "left-pad": "^1.1.0",
+    "lodash": "^4.13.1",
+    "lunr": "^0.7.1",
+    "moment": "2.13.0",
+    "remarkable": "^1.6.2",
+    "truncatise": "0.0.5",
+    "xss": "^0.2.13"
   },
   "devDependencies": {
-    "jshint": "2.7.0",
-    "mocha": "1.18.2",
-    "should": "2"
+    "cheerio": "^0.20.0",
+    "ejs": "^2.4.2",
+    "express": "^4.14.0",
+    "faucet": "0.0.1",
+    "jshint": "2.9.2",
+    "supertest": "^1.2.0",
+    "tape": "4.6.0"
   },
   "keywords": [
+    "cms",
     "blog",
-    "cms"
+    "markdown"
   ],
   "repository": {
     "type": "git",

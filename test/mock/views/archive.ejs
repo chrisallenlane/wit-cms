@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <title><%= page.title %></title>
+    <meta name='view' content='archive'>
+    <link rel='canonical' href='<%= page.url %>'>
+  </head>
+  <body>
+
+      <h1><%= page.title %></h1>
+      <h2><%= page.name %></h2>
+
+      <span class='year'><%= page.date.year %></span>
+      <span class='month'><%= page.date.month %></span>
+      <span class='day'><%= page.date.day %></span>
+
+      <main>
+      <% page.content.forEach(function(post) {%>
+        <h3><%= post.title %></h3>
+      <% })%>
+      </main>
+
+  </body>
+</html>
