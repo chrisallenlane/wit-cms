@@ -106,7 +106,7 @@ Routes
 - `/feed`
 - `/sitemap.xml`
 
-### asynchronous ###
+### Asynchronous ###
 
 - `/async/pages`
 - `/async/pages/:page`
@@ -156,7 +156,7 @@ wit {
   ],
 
   params: {
-    // arbitrary params specified by user on initialization
+    // arbitrary params specified on initialization
   },
 
 }
@@ -176,7 +176,7 @@ Whereby a post object takes the following shape:
     datetime : '2012-09-12T00:00:00-04:00',
     day      : '02',
     month    : '04',
-    pretty   : '2 April 2014', // user-configurable
+    pretty   : '2 April 2014', // configurable
     unix     : '1396411200',
     year     : '2014',
   content: '<p>The page content.</p>',
