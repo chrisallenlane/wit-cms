@@ -1,6 +1,8 @@
 [![Build Status](https://travis-ci.org/chrisallenlane/wit-cms.svg)](https://travis-ci.org/chrisallenlane/wit-cms)
 [![npm](https://img.shields.io/npm/v/wit-cms.svg)]()
 [![npm](https://img.shields.io/npm/dt/wit-cms.svg)]()
+[![Known Vulnerabilities](https://snyk.io/test/npm/wit-cms/badge.svg)](https://snyk.io/test/npm/wit-cms)
+
 
 wit
 ===
@@ -269,13 +271,6 @@ templating engine (`ejs`, `hogan`, etc.) when authoring views.
 
 Lastly - though this should go without saying - the `node` application should
 never be run as `root`.
-
-
-Known Issues
-------------
-- Due to the way `wit` loads content, page and post names must be unique. I
-  don't anticipate that this will cause problems for most users, and thus am
-  not planning on addressing this issue at this time.
 
 
 License
