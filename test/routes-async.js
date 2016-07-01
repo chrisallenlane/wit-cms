@@ -395,7 +395,7 @@ Wit(app, config, function(err, wit) {
     t.plan(3);
 
     request(app)
-      .get('/async/blog/search/john')
+      .get('/async/blog/search?q=john')
       .expect('Content-Type', /json/)
       .expect(200)
       .end(function(err, res) {
@@ -415,7 +415,7 @@ Wit(app, config, function(err, wit) {
     t.plan(3);
 
     request(app)
-      .get('/async/blog/search/john?p=1')
+      .get('/async/blog/search?q=john&p=1')
       .expect('Content-Type', /json/)
       .expect(200)
       .end(function(err, res) {
@@ -427,6 +427,47 @@ Wit(app, config, function(err, wit) {
         t.ok(
           lodash.isEqual(Object.keys(json), [ 'pagination', 'posts' ]),
           'should return posts and pagination'
+        );
+      });
+  });
+
+  test('routes-async: pages by search (raw)', function(t) {
+    t.plan(3);
+
+    request(app)
+      .get('/async/pages/search?q=page')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function(err, res) {
+        t.notOk(err, 'expectations should be met');
+
+        var json = JSON.parse(res.text);
+
+        t.equals(json.pages.length, 3, 'should return appropriate pages');
+        t.ok(
+          lodash.isEqual(Object.keys(json), [ 'pages' ]),
+          'should return pages and pagination'
+        );
+      });
+  });
+
+
+  test('routes-async: pages by search (paginated)', function(t) {
+    t.plan(3);
+
+    request(app)
+      .get('/async/pages/search?q=third&p=1')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function(err, res) {
+        t.notOk(err, 'expectations should be met');
+
+        var json = JSON.parse(res.text);
+
+        t.equals(json.pages.length, 1, 'should return appropriate pages');
+        t.ok(
+          lodash.isEqual(Object.keys(json), [ 'pagination', 'pages' ]),
+          'should return pages and pagination'
         );
       });
   });

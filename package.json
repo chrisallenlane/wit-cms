@@ -1,6 +1,6 @@
 {
   "name": "wit-cms",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "A file-based blog-aware content-management system for Express.",
   "homepage": "https://github.com/chrisallenlane/wit-cms",
   "author": {

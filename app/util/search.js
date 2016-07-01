@@ -5,8 +5,8 @@ const lunr   = require('lunr');
 var configs = config();
 var boost   = configs.search.boost;
 
-// lunr search index
-var idx = lunr(function() {
+// lunr post index
+var postIndex = lunr(function() {
   this.field('title'       , { boost: boost.title       });
   this.field('description' , { boost: boost.description });
   this.field('excerpt'     , { boost: boost.excerpt     });
@@ -14,12 +14,26 @@ var idx = lunr(function() {
   this.field('author'      , { boost: boost.author      });
 });
 
+// lunr page index
+var pageIndex = lunr(function() {
+  this.field('title'       , { boost: boost.title       });
+  this.field('description' , { boost: boost.description });
+  this.field('content'     , { boost: boost.content     });
+});
+
+var pages;
+var posts;
+
 // initializes the lunr index
 module.exports.initialize = function(wit) {
 
-  // add the posts to the index
-  lodash.forEach(wit.posts, function(post) {
-    idx.add({
+  // buffer the search corpuses
+  pages = wit.pages;
+  posts = wit.posts;
+
+  // add the posts to the post index
+  lodash.forEach(posts, function(post) {
+    postIndex.add({
       title       : post.title,
       description : post.description,
       excerpt     : post.excerpt,
@@ -28,11 +42,26 @@ module.exports.initialize = function(wit) {
       id          : post.name,
     });
   });
+
+  // add the pages to the page index
+  lodash.forEach(pages, function(page) {
+    pageIndex.add({
+      title       : page.title,
+      description : page.description,
+      content     : page.content,
+      id          : page.name,
+    });
+  });
 };
 
 // returns search results
-module.exports.search = function(posts, query) {
-  return idx.search(query).map(function(match) {
-    return posts[match.ref];
+module.exports.search = function(needle, haystack) {
+
+  // select the appropriate search index and corpus
+  var idx    = (haystack === 'pages') ? pageIndex : postIndex ;
+  var corpus = (haystack === 'pages') ? pages     : posts ;
+
+  return idx.search(needle).map(function(match) {
+    return corpus[match.ref];
   });
 };

@@ -83,13 +83,12 @@ Pages will have a similar, but sparser, header:
 ```javascript
 {{{
 "title"       : "About Me",
-"author"      : "John Doe"
 "description" : "The page description."
 }}}
 ```
 
-All properties specified in front-matter will be made available to the
-corresponding rendered views as page locals. 
+Beyond the above, any additional properties specified in front-matter will be
+made available to the corresponding rendered views as page locals. 
 
 
 Routes
@@ -99,6 +98,7 @@ Routes
 ### Synchronous ###
 
 - `/:page`
+- `/page/search`
 - `/blog/`
 - `/blog/post/:name`
 - `/blog/category/:category`
@@ -111,6 +111,7 @@ Routes
 ### Asynchronous ###
 
 - `/async/pages`
+- `/async/pages/search`
 - `/async/pages/:page`
 - `/async/blog/`
 - `/async/blog/post/:name`

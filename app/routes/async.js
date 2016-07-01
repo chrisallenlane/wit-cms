@@ -48,6 +48,22 @@ module.exports = function(app, wit, callback) {
     send(res, response);
   });
 
+  // search: returns pages matching query
+  app.get(asyncRoot + 'pages/search', function(req, res) {
+
+    var pages = search(req.query.q, 'pages');
+
+    var response = (pages)
+      ? wpaginate(pages, req.query.p)
+      : notfound();
+
+    // XXX: for this route only, return `pages` instead of `posts`
+    response.pages = response.posts;
+    delete response.posts;
+
+    send(res, response);
+  });
+
   // returns the specified page
   app.get(asyncRoot + 'pages/:title', function(req, res) {
 
@@ -118,10 +134,10 @@ module.exports = function(app, wit, callback) {
     send(res, response);
   });
   
-  // returns posts belonging to :tag, optionally paginated
-  app.get(asyncRoot + 'blog/search/:query', function(req, res) {
+  // search: returns blog posts matching query
+  app.get(asyncRoot + 'blog/search', function(req, res) {
 
-    var posts = search(wit.posts, req.params.query);
+    var posts = search(req.query.q, 'posts');
 
     var response = (posts)
       ? wpaginate(posts, req.query.p)
@@ -129,7 +145,7 @@ module.exports = function(app, wit, callback) {
 
     send(res, response);
   });
-
+  
   // return the categories
   app.get(asyncRoot + 'categories', function(req, res) {
     send(res, { categories: wit.categories || [] });
