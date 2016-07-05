@@ -1,14 +1,15 @@
 const config     = require('./config');
+var configs      = config();
+
+const Remarkable = require('remarkable');
 const fm         = require('json-front-matter');
 const fs         = require('fs');
-const Remarkable = require('remarkable');
 const moment     = require('moment');
 const path       = require('path');
+const remarkable = new Remarkable(configs.remarkable);
 const truncatise = require('truncatise');
-const remarkable = new Remarkable({ html: true });
 
 module.exports = function(wit, callback) {
-  var configs = config();
   wit.posts   = {};
   
   // excerpt settings

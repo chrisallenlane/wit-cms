@@ -1,12 +1,13 @@
 const config     = require('./config');
+var configs      = config();
+
+const Remarkable = require('remarkable');
 const fm         = require('json-front-matter');
 const fs         = require('fs');
-const Remarkable = require('remarkable');
 const path       = require('path');
-const remarkable = new Remarkable({ html: true });
+const remarkable = new Remarkable(configs.remarkable);
 
 module.exports = function(wit, callback) {
-  var configs = config();
   wit.pages   = {};
 
   fs.readdir(configs.pages.dir, function(err, files) {

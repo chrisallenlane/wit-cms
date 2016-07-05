@@ -37,6 +37,12 @@ var configs = {
     },
   },
 
+  // remarkable (markdown parser) configs
+  remarkable: {
+    html    : true,
+    linkify : true,
+  },
+
   // misc configs
   dateFormat         : 'D MMMM YYYY',
   readMoreSeparator  : '<!--more-->',

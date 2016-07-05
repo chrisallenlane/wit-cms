@@ -16,10 +16,10 @@ const test   = require('tape');
  *
  */
 test('boot-config: should have the appropriate defaults', function(t) {
-  t.plan(17);
+  t.plan(18);
 
   var configs = config();
-  t.equals(Object.keys(configs).length      , 10);
+  t.equals(Object.keys(configs).length      , 11);
   t.equals(configs.path.asyncRoot           , '/async/');
   t.equals(configs.path.notFoundPage        , '/not-found');
   t.equals(configs.pages.dir                , './test/mock/pages/');
@@ -35,6 +35,7 @@ test('boot-config: should have the appropriate defaults', function(t) {
   t.equals(configs.dateFormat               , 'D MMMM YYYY');
   t.equals(configs.readMoreSeparator        , '<!--more-->');
   t.equals(configs.enableAsyncRoutes        , true);
+  t.equals(configs.remarkable.html          , true);
   t.ok(lodash.isEqual(configs.markdownExtensions, [ 'markdown', 'md' ]));
 });
 
