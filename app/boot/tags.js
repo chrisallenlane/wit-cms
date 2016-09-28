@@ -6,7 +6,8 @@ module.exports = function (wit, callback) {
   // push each post's tags to wit.tags
   lodash.forEach(wit.posts, function(post) {
     post.tags.forEach(function(tag) {
-      wit.tags.push(tag);
+      //Title case all tags
+      wit.tags.push(lodash.startCase(lodash.toLower(tag)))
     });
   });
 
