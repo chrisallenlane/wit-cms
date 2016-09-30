@@ -18,24 +18,24 @@
     "laxbreak": true
   },
   "dependencies": {
-    "async": "2.0.0-rc.6",
-    "json-front-matter": "1.0.0",
-    "left-pad": "^1.1.0",
-    "lodash": "^4.13.1",
-    "lunr": "^0.7.1",
-    "moment": "2.14.1",
-    "remarkable": "^1.6.2",
-    "truncatise": "0.0.5",
-    "xss": "^0.2.13"
+    "async": "latest",
+    "json-front-matter": "latest",
+    "left-pad": "latest",
+    "lodash": "latest",
+    "lunr": "latest",
+    "moment": "latest",
+    "remarkable": "latest",
+    "truncatise": "latest",
+    "xss": "latest"
   },
   "devDependencies": {
-    "cheerio": "^0.20.0",
-    "ejs": "^2.4.2",
-    "express": "^4.14.0",
-    "faucet": "0.0.1",
-    "jshint": "2.9.2",
-    "supertest": "^1.2.0",
-    "tape": "4.6.0"
+    "cheerio": "latest",
+    "ejs": "latest",
+    "express": "latest",
+    "faucet": "latest",
+    "jshint": "latest",
+    "supertest": "latest",
+    "tape": "latest"
   },
   "keywords": [
     "cms",

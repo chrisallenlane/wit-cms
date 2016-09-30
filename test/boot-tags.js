@@ -12,7 +12,7 @@ Wit(app, config, function(err, wit) {
     t.plan(2);
     t.ok(Array.isArray(wit.tags), 'must be an array');
     t.ok(
-      lodash.isEqual(wit.tags, [ 'alpha', 'bravo', 'charlie' ]),
+      lodash.isEqual(wit.tags, [ 'Alpha', 'Bravo', 'Charlie' ]),
       'must contain the correct values'
     );
   });

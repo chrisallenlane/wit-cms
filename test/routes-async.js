@@ -385,7 +385,7 @@ Wit(app, config, function(err, wit) {
         var json = JSON.parse(res.text);
         t.equals(Object.keys(json).length, 1, 'should return appropriate json');
         t.ok(
-          lodash.isEqual(json.tags, [ 'alpha', 'bravo', 'charlie' ]),
+          lodash.isEqual(json.tags, [ 'Alpha', 'Bravo', 'Charlie' ]),
           'should return the tags'
         );
       });
