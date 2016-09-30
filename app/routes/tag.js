@@ -12,8 +12,13 @@ module.exports = function(app, wit, callback) {
     // sanitize the input (it will be fed into the response markup)
     var tag   = xss(req.params.tag).toLowerCase();
 
-    // find the appropriate posts
-    var posts = lodash.filter(wit.posts, { tags: [ tag ]});
+    // find the appropriate posts case insensitive
+    var posts = lodash.filter(wit.posts, function(post){
+        for (var i = 0; i < post.tags.length; i++) {
+          if(post.tags[i].toLowerCase()==tag)
+          return post;
+        }
+      });
 
     // paginate the posts
     var paginated = paginate(posts, {
