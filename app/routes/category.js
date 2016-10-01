@@ -10,7 +10,7 @@ module.exports = function(app, wit, callback) {
   app.get('/blog/category/:category', function(req, res) {
 
     // sanitize the input (it will be fed into the response markup)
-    var category = xss(req.params.category).toLowerCase();
+    var category = xss(req.params.category);
 
     // find the appropriate posts
     var posts    = lodash.filter(wit.posts, { categories: [ category ]});

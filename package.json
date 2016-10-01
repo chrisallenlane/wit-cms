@@ -1,6 +1,6 @@
 {
   "name": "wit-cms",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "description": "A file-based blog-aware content-management system for Express.",
   "homepage": "https://github.com/chrisallenlane/wit-cms",
   "author": {
@@ -18,24 +18,24 @@
     "laxbreak": true
   },
   "dependencies": {
-    "async": "2.0.0-rc.6",
+    "async": "2.0.1",
     "json-front-matter": "1.0.0",
     "left-pad": "^1.1.0",
     "lodash": "^4.13.1",
     "lunr": "^0.7.1",
-    "moment": "2.14.1",
+    "moment": "2.15.1",
     "remarkable": "^1.6.2",
     "truncatise": "0.0.5",
     "xss": "^0.2.13"
   },
   "devDependencies": {
-    "cheerio": "^0.20.0",
+    "cheerio": "^0.22.0",
     "ejs": "^2.4.2",
     "express": "^4.14.0",
     "faucet": "0.0.1",
-    "jshint": "2.9.2",
-    "supertest": "^1.2.0",
-    "tape": "4.6.0"
+    "jshint": "2.9.3",
+    "supertest": "^2.0.0",
+    "tape": "4.6.2"
   },
   "keywords": [
     "cms",

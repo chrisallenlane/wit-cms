@@ -10,7 +10,7 @@ module.exports = function(app, wit, callback) {
   app.get('/blog/tag/:tag', function(req, res) {
 
     // sanitize the input (it will be fed into the response markup)
-    var tag   = xss(req.params.tag).toLowerCase();
+    var tag   = xss(req.params.tag);
 
     // find the appropriate posts
     var posts = lodash.filter(wit.posts, { tags: [ tag ]});

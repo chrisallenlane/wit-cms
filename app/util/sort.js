@@ -6,9 +6,9 @@ module.exports = function(posts) {
   return lodash.sortBy(posts, function(post) {
 
     // NB / KLUDGE: sort() is now also invoked on page objects on page search,
-    // and page objects don't have dates (typicall). Thus, the following
+    // and page objects don't typically have dates. Thus, the following
     // short-circuits on pages, converting the object to an array, but
-    // performing no actual sorting.
+    // performs no actual sorting.
     if (! post.date) { return 0; }
 
     // page objects are, however, sorted by date in descending order

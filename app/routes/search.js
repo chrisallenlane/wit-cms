@@ -34,12 +34,6 @@ module.exports = function (app, wit, callback) {
     });
   });
 
-
-
-
-
-
-
   // page search route
   app.get('/page/search', function(req, res) {
 
@@ -66,11 +60,6 @@ module.exports = function (app, wit, callback) {
       wit : wit,
     });
   });
-
-
-
-
-
 
   callback();
 };
