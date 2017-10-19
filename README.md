@@ -4,17 +4,17 @@
 [![Known Vulnerabilities](https://snyk.io/test/npm/wit-cms/badge.svg)](https://snyk.io/test/npm/wit-cms)
 
 
-wit
-===
-`wit` is a flat-file, "blog aware", publishing platform for [Express][]. It's
-designed for those who want WordPress-like functionality without the heft and
-attack-surface of a WordPress installation. It emphasizes simplicity,
+wit-cms
+=======
+`wit-cms` is a flat-file, "blog aware", publishing platform for [Express][].
+It's designed for those who want WordPress-like functionality without the heft
+and attack-surface of a WordPress installation. It emphasizes simplicity,
 security, and performance.
 
 Overview
 --------
 Page and post content is declared by creating markdown files within the
-appropriate directories. `wit` will generate everything else automatically,
+appropriate directories. `wit-cms` will generate everything else automatically,
 including:
 
 - express routes (both sync and async)
@@ -24,24 +24,24 @@ including:
 - a `sitemap.xml`
 - an RSS feed
 
-On application start, `wit` loads all site content into an in-memory object,
-making it possible to serve content without reading a disk. This makes it
-faster than traditional database-backed content-management systems.
+On application start, `wit-cms` loads all site content into an in-memory
+object, making it possible to serve content without reading a disk. This makes
+it faster than traditional database-backed content-management systems.
 
-`wit` seeks to offer a compromise between the full-featuredness of WordPress
-and the ultra-minimalism of [Jekyll][], and strives to be a viable alternative
-to those who may be dissatisfied with either.
+`wit-cms` seeks to offer a compromise between the full-featuredness of
+WordPress and the ultra-minimalism of [Jekyll][], and strives to be a viable
+alternative to those who may be dissatisfied with either.
 
 
 Quick Start
 -----------
-To install only the `wit` module, run:
+To install only the `wit-cms` module, run:
 
 `npm install wit-cms`
 
 To spare yourself the tedium of having to write boilerplate templating,
 however, it may be preferable to clone the `wit-bootstrap` repository and
-modify from there. This is the recommended approach for using `wit`:
+modify from there. This is the recommended approach for using `wit-cms`:
 
 https://github.com/chrisallenlane/wit-bootstrap
 
@@ -93,7 +93,7 @@ made available to the corresponding rendered views as page locals.
 
 Routes
 ------
-`wit` automatically generates the following routes:
+`wit-cms` automatically generates the following routes:
 
 ### Synchronous ###
 
@@ -127,7 +127,7 @@ Routes
 
 Objects
 -------
-`wit` buffers all site content in a `wit` object. Here is an example of its
+`wit-cms` buffers all site content in a `wit` object. Here is an example of its
 structure:
 
 ```javascript
@@ -243,19 +243,20 @@ object as `wit.params`.
 
 Searching
 ---------
-`wit` provides for searching among blog posts via the [`lunr`][lunr] module.
+`wit-cms` provides for searching among blog posts via the [`lunr`][lunr]
+module.
 
 
 Commenting
 ----------
-Because `wit` stores its content in flat files instead of a database, it does
-not and can not natively support a reader commeting system. If you'd like to
-enable commenting on your blog, consider using [Disqus][] or [`isso`][isso].
+Because `wit-cms` stores its content in flat files instead of a database, it
+does not and can not natively support a reader commeting system. If you'd like
+to enable commenting on your blog, consider using [Disqus][] or [`isso`][isso].
 
 
 Security
 --------
-`wit` neither implements administrative access controls, nor requires a
+`wit-cms` neither implements administrative access controls, nor requires a
 database back-end. As such, it is immune to many classes of attacks to which
 other content-management systems may be vulnerable.
 
@@ -265,7 +266,7 @@ It is not "hack proof", however. Its attack-surface consists (at least) of:
 2. The attack-surface of Express
 3. The attack-surface of nodejs
 
-As a defense against [Cross-Site Scripting attacks][xss-owasp], `wit`
+As a defense against [Cross-Site Scripting attacks][xss-owasp], `wit-cms`
 internally relies on the [`xss`][xss] module to sanitize user inputs that may
 be written back to the DOM.  Regardless, it is still prudent to use a
 templating engine (`ejs`, `hogan`, etc.) when authoring views.
@@ -276,7 +277,7 @@ never be run as `root`.
 
 License
 -------
-`wit` is released under the MIT license. See `LICENSE.txt` for details. 
+`wit-cms` is released under the MIT license. See `LICENSE.txt` for details. 
 
 [Disqus]:            http://disqus.com/
 [Express]:           http://expressjs.com/
