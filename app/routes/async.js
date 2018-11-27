@@ -10,19 +10,19 @@ const asyncRoot = configs.path.asyncRoot;
 
 // helper functions
 // sends json
-var send = function(res, response) {
+const send = function(res, response) {
   res.setHeader('content-type', 'application/json');
   res.send(response);
 };
 
 // "wrapped paginate"
-var wpaginate = function(response, p) {
+const wpaginate = function(response, p) {
   return (p)
     ? paginate(response, { page : p, perPage : configs.posts.perPage })
     : { posts: sort(response) };
 };
 
-var notfound = function() {
+const notfound = function() {
   return { error: 'not found'};
 };
 
@@ -41,7 +41,7 @@ module.exports = function(app, wit, callback) {
   // returns all pages
   app.get(asyncRoot + 'pages', function(req, res) {
 
-    var response = (wit.pages)
+    const response = (wit.pages)
       ? { pages: wit.pages }
       : notfound();
 
@@ -51,9 +51,9 @@ module.exports = function(app, wit, callback) {
   // search: returns pages matching query
   app.get(asyncRoot + 'pages/search', function(req, res) {
 
-    var pages = search(req.query.q, 'pages');
+    const pages = search(req.query.q, 'pages');
 
-    var response = (pages)
+    const response = (pages)
       ? wpaginate(pages, req.query.p)
       : notfound();
 
@@ -67,7 +67,7 @@ module.exports = function(app, wit, callback) {
   // returns the specified page
   app.get(asyncRoot + 'pages/:title', function(req, res) {
 
-    var response = (wit.pages[req.params.title])
+    const response = (wit.pages[req.params.title])
       ? { page : wit.pages[req.params.title] }
       : notfound();
 
@@ -77,7 +77,7 @@ module.exports = function(app, wit, callback) {
   // returns all posts, optionally paginated
   app.get(asyncRoot + 'blog', function(req, res) {
 
-    var response = (wit.posts)
+    const response = (wit.posts)
       ? wpaginate(wit.posts, req.query.p)
       : notfound();
 
@@ -87,7 +87,7 @@ module.exports = function(app, wit, callback) {
   // returns a specific post
   app.get(asyncRoot + 'blog/post/:title', function(req, res) {
     
-    var response = (wit.posts[req.params.title])
+    const response = (wit.posts[req.params.title])
       ? { post : wit.posts[req.params.title] }
       : notfound();
 
@@ -97,9 +97,9 @@ module.exports = function(app, wit, callback) {
   // returns posts belonging to :category, optionally paginated
   app.get(asyncRoot + 'blog/category/:category', function(req, res) {
 
-    var posts = lodash.filter(wit.posts, { categories: [ req.params.category ] });
+    const posts = lodash.filter(wit.posts, { categories: [ req.params.category ] });
 
-    var response = (posts)
+    const response = (posts)
       ? wpaginate(posts, req.query.p)
       : notfound();
 
@@ -109,9 +109,9 @@ module.exports = function(app, wit, callback) {
   // returns posts belonging to :tag, optionally paginated
   app.get(asyncRoot + 'blog/tag/:tag', function(req, res) {
 
-    var posts = lodash.filter(wit.posts, { tags: [ req.params.tag ] });
+    const posts = lodash.filter(wit.posts, { tags: [ req.params.tag ] });
 
-    var response = (posts)
+    const response = (posts)
       ? wpaginate(posts, req.query.p)
       : notfound();
 
@@ -121,13 +121,13 @@ module.exports = function(app, wit, callback) {
   // returns the specified archive
   app.get(asyncRoot + 'blog/archive/:year/:month?/:day?', function(req, res) {
 
-    var posts = archive(wit.posts, {
+    const posts = archive(wit.posts, {
       year  : req.params.year,
       month : req.params.month,
       day   : req.params.day,
     });
 
-    var response = (! lodash.isEmpty(posts))
+    const response = (! lodash.isEmpty(posts))
       ? wpaginate(posts, req.query.p)
       : notfound();
 
@@ -137,9 +137,9 @@ module.exports = function(app, wit, callback) {
   // search: returns blog posts matching query
   app.get(asyncRoot + 'blog/search', function(req, res) {
 
-    var posts = search(req.query.q, 'posts');
+    const posts = search(req.query.q, 'posts');
 
-    var response = (posts)
+    const response = (posts)
       ? wpaginate(posts, req.query.p)
       : notfound();
 

@@ -1,12 +1,11 @@
-const config = require('../boot/config');
-const lodash = require('lodash');
-const lunr   = require('lunr');
-
-var configs = config();
-var boost   = configs.search.boost;
+const config  = require('../boot/config');
+const configs = config();
+const lodash  = require('lodash');
+const lunr    = require('lunr');
+const boost   = configs.search.boost;
 
 // lunr post index
-var postIndex = lunr(function() {
+const postIndex = lunr(function() {
   this.field('title'       , { boost: boost.title       });
   this.field('description' , { boost: boost.description });
   this.field('excerpt'     , { boost: boost.excerpt     });
@@ -15,7 +14,7 @@ var postIndex = lunr(function() {
 });
 
 // lunr page index
-var pageIndex = lunr(function() {
+const pageIndex = lunr(function() {
   this.field('title'       , { boost: boost.title       });
   this.field('description' , { boost: boost.description });
   this.field('content'     , { boost: boost.content     });
@@ -58,8 +57,8 @@ module.exports.initialize = function(wit) {
 module.exports.search = function(needle, haystack) {
 
   // select the appropriate search index and corpus
-  var idx    = (haystack === 'pages') ? pageIndex : postIndex ;
-  var corpus = (haystack === 'pages') ? pages     : posts ;
+  const idx    = (haystack === 'pages') ? pageIndex : postIndex ;
+  const corpus = (haystack === 'pages') ? pages     : posts ;
 
   return idx.search(needle).map(function(match) {
     return corpus[match.ref];

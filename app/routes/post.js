@@ -1,7 +1,6 @@
 const config   = require('../boot/config');
 const paginate = require('../util/paginate');
 const xss      = require('xss');
-var configs    = config();
 
 module.exports = function(app, wit, callback) {
 
@@ -9,9 +8,9 @@ module.exports = function(app, wit, callback) {
   app.get('/blog', function(req, res) {
 
     // paginate the posts
-    var paginated = paginate(wit.posts, {
+    const paginated = paginate(wit.posts, {
       page    : req.query.p,
-      perPage : configs.posts.perPage,
+      perPage : config().posts.perPage,
     });
 
     res.render('blog', {
@@ -28,10 +27,10 @@ module.exports = function(app, wit, callback) {
 
   // blog post
   app.get('/blog/post/:name', function(req, res) {
-    var post = wit.posts[req.params.name];
+    const post = wit.posts[req.params.name];
 
     if (! post) {
-      return res.redirect(configs.path.notFoundPage);
+      return res.redirect(config().path.notFoundPage);
     }
 
     // otherwise, render the appropriate post

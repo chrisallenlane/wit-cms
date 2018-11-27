@@ -2,7 +2,6 @@ const config   = require('../boot/config');
 const lodash   = require('lodash');
 const paginate = require('../util/paginate');
 const xss      = require('xss');
-var configs    = config();
 
 module.exports = function(app, wit, callback) {
 
@@ -10,15 +9,15 @@ module.exports = function(app, wit, callback) {
   app.get('/blog/category/:category', function(req, res) {
 
     // sanitize the input (it will be fed into the response markup)
-    var category = xss(req.params.category);
+    const category = xss(req.params.category);
 
     // find the appropriate posts
-    var posts    = lodash.filter(wit.posts, { categories: [ category ]});
+    const posts    = lodash.filter(wit.posts, { categories: [ category ] });
 
     // paginate the posts
-    var paginated = paginate(posts, {
+    const paginated = paginate(posts, {
       page    : req.query.p,
-      perPage : configs.posts.perPage,
+      perPage : config().posts.perPage,
     });
 
     res.render('category', {

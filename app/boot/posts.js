@@ -1,7 +1,6 @@
-const config     = require('./config');
-var configs      = config();
-
 const Remarkable = require('remarkable');
+const config     = require('./config');
+const configs    = config();
 const fm         = require('json-front-matter');
 const fs         = require('fs');
 const moment     = require('moment');
@@ -13,7 +12,7 @@ module.exports = function(wit, callback) {
   wit.posts   = {};
   
   // excerpt settings
-  var truncateOptions = {
+  const truncateOptions = {
     TruncateLength : configs.posts.excerpt.length,
     TruncateBy     : configs.posts.excerpt.units,
     Strict         : false,
@@ -36,10 +35,10 @@ module.exports = function(wit, callback) {
     // iterate over each file
     files.forEach(function(file) {
       // assemble the post object
-      var post = {};
+      const post = {};
       
       // parse out the postname
-      var extension = path.extname(file);
+      const extension = path.extname(file);
       post.name     = path.basename(file, extension);
       
       // ignore non-markdown files
@@ -51,17 +50,17 @@ module.exports = function(wit, callback) {
         post.raw = fs.readFileSync(configs.posts.dir + file, 'utf8');
 
         // parse out the post body
-        var contents  = fm.parse(post.raw);
+        const contents  = fm.parse(post.raw);
         post.markdown = contents.body;
         
         // parse out the front-matter
-        for (var attr in contents.attributes) {
+        for (const attr in contents.attributes) {
           post[attr] = contents.attributes[attr];
         }
 
         // format the date post
         if (post.date) {
-          var m = moment(post.date, 'YYYY-MM-DD');
+          const m = moment(post.date, 'YYYY-MM-DD');
           post.date = {
             datetime : m.format(),
             day      : m.format('DD'),
@@ -78,7 +77,7 @@ module.exports = function(wit, callback) {
         // Search for the "Read More" separator among the post content. If it's
         // there, split the excerpt there. Otherwise, default to chopping at the
         // configured point.
-        var readMorePos = post.content.indexOf(configs.readMoreSeparator);
+        const readMorePos = post.content.indexOf(configs.readMoreSeparator);
         if (readMorePos > 0) {
           post.excerpt = post.content.substr(0, readMorePos);
         } else {

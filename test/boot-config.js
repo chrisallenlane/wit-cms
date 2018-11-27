@@ -18,7 +18,7 @@ const test   = require('tape');
 test('boot-config: should have the appropriate defaults', function(t) {
   t.plan(18);
 
-  var configs = config();
+  const configs = config();
   t.equals(Object.keys(configs).length      , 11);
   t.equals(configs.path.asyncRoot           , '/async/');
   t.equals(configs.path.notFoundPage        , '/not-found');

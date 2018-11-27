@@ -3,8 +3,7 @@ const config  = require('./mock/config');
 const express = require('express');
 const lodash  = require('lodash');
 const test    = require('tape');
-
-var app       = express();
+const app     = express();
 
 // init the app
 Wit(app, config, function(err, wit) {

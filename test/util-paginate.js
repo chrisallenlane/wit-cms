@@ -5,15 +5,14 @@ const lodash   = require('lodash');
 const paginate = require('../app/util/paginate');
 const sort     = require('../app/util/sort');
 const test     = require('tape');
-
-var app        = express();
+const app      = express();
 
 // init the app
 Wit(app, config, function(err, wit) {
 
   test('util-paginate: parameters must be optional', function(t) {
     t.plan(6);
-    var paginated = paginate(wit.posts);
+    const paginated = paginate(wit.posts);
     t.equals(paginated.posts.length        , 3);
     t.equals(paginated.pagination.count    , 1);
     t.equals(paginated.pagination.current  , 1);
@@ -24,7 +23,7 @@ Wit(app, config, function(err, wit) {
 
   test('util-paginate: parameters must accept posts as an array', function(t) {
     t.plan(6);
-    var paginated = paginate(sort(wit.posts));
+    const paginated = paginate(sort(wit.posts));
     t.equals(paginated.posts.length        , 3);
     t.equals(paginated.pagination.count    , 1);
     t.equals(paginated.pagination.current  , 1);
@@ -35,7 +34,7 @@ Wit(app, config, function(err, wit) {
 
   test('util-paginate: perPage must be respected', function(t) {
     t.plan(6);
-    var paginated = paginate(wit.posts, { page: 1, perPage: 2 });
+    const paginated = paginate(wit.posts, { page: 1, perPage: 2 });
     t.equals(paginated.posts.length        , 2);
     t.equals(paginated.pagination.count    , 2);
     t.equals(paginated.pagination.current  , 1);
@@ -78,7 +77,7 @@ Wit(app, config, function(err, wit) {
 
   test('util-paginate: page must default to 1 if invalid', function(t) {
     t.plan(7);
-    var paginated = paginate(wit.posts, { page: 'foo', perPage: 1 });
+    const paginated = paginate(wit.posts, { page: 'foo', perPage: 1 });
     t.equals(paginated.posts.length        , 1);
     t.equals(paginated.posts[0].name       , 'post-3');
     t.equals(paginated.pagination.count    , 3);
@@ -90,7 +89,7 @@ Wit(app, config, function(err, wit) {
 
   test('util-paginate: page must ignore values < 1', function(t) {
     t.plan(7);
-    var paginated = paginate(wit.posts, { page: -1 });
+    const paginated = paginate(wit.posts, { page: -1 });
     t.equals(paginated.posts.length        , 3);
     t.equals(paginated.posts[0].name       , 'post-3');
     t.equals(paginated.pagination.count    , 1);
@@ -102,7 +101,7 @@ Wit(app, config, function(err, wit) {
 
   test('util-paginate: perPage must default to 10 if invalid', function(t) {
     t.plan(7);
-    var paginated = paginate(wit.posts, { perPage: 'foo' });
+    const paginated = paginate(wit.posts, { perPage: 'foo' });
     t.equals(paginated.posts.length        , 3);
     t.equals(paginated.posts[0].name       , 'post-3');
     t.equals(paginated.pagination.count    , 1);

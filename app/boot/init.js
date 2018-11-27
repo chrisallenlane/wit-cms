@@ -1,12 +1,5 @@
-const config     = require('./config');
-const fm         = require('json-front-matter');
-const fs         = require('fs');
-const Remarkable = require('remarkable');
-const moment     = require('moment');
-const path       = require('path');
-const truncatise = require('truncatise');
-const remarkable = new Remarkable({ html: true });
-var configs      = config();
+const config  = require('./config');
+const configs = config();
 
 module.exports = function(app, wit, callback) {
 

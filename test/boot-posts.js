@@ -3,7 +3,7 @@ const config  = require('./mock/config');
 const express = require('express');
 const lodash  = require('lodash');
 const test    = require('tape');
-var app       = express();
+const app     = express();
 
 // init the app
 Wit(app, config, function(err, wit) {
@@ -15,7 +15,7 @@ Wit(app, config, function(err, wit) {
     t.equals(Object.keys(wit.posts).length, 3);
 
     // enumerate the valid post properties
-    var postProperties = [ 
+    const postProperties = [ 
       'name',
       'url',
       'title',

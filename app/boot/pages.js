@@ -1,7 +1,6 @@
-const config     = require('./config');
-var configs      = config();
-
 const Remarkable = require('remarkable');
+const config     = require('./config');
+const configs    = config();
 const fm         = require('json-front-matter');
 const fs         = require('fs');
 const path       = require('path');
@@ -24,10 +23,10 @@ module.exports = function(wit, callback) {
     // iterate over each file
     files.forEach(function(file) {
       // assemble the page object
-      var page = {};
+      const page = {};
       
       // parse out the page name
-      var extension = path.extname(file);
+      const extension = path.extname(file);
       page.name     = path.basename(file, extension);
       
       // ignore non-markdown files
@@ -39,11 +38,11 @@ module.exports = function(wit, callback) {
         page.raw = fs.readFileSync(configs.pages.dir + file, 'utf8');
 
         // parse out the page body
-        var contents  = fm.parse(page.raw);
+        const contents  = fm.parse(page.raw);
         page.markdown = contents.body;
         
         // parse out the front-matter
-        for (var attr in contents.attributes) {
+        for (const attr in contents.attributes) {
           page[attr] = contents.attributes[attr];
         }
 

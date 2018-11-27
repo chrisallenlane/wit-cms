@@ -5,8 +5,7 @@ const express = require('express');
 const lodash  = require('lodash');
 const request = require('supertest');
 const test    = require('tape');
-
-var app = require('./mock/app');
+const app     = require('./mock/app');
 
 // init the app
 Wit(app, config, function(err, wit) {
@@ -21,7 +20,7 @@ Wit(app, config, function(err, wit) {
       .end(function(err, res) {
         t.notOk(err, 'expectations should be met');
 
-        var $ = cheerio.load(res.text);
+        const $ = cheerio.load(res.text);
 
         t.equals(
           $('meta[name=view]').attr('content'),
@@ -61,7 +60,7 @@ Wit(app, config, function(err, wit) {
       .end(function(err, res) {
         t.notOk(err, 'expectations should be met');
 
-        var $ = cheerio.load(res.text);
+        const $ = cheerio.load(res.text);
 
         t.equals(
           $('meta[name=view]').attr('content'),

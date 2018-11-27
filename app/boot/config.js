@@ -1,7 +1,7 @@
 const lodash = require('lodash');
 
 // set the default configs
-var configs = {
+const configs = {
 
   path: {
     // path at which data may be retrieved asynchronously
@@ -50,11 +50,11 @@ var configs = {
   enableAsyncRoutes  : true,
 };
 
-var get = function() {
+const get = function() {
   return configs;
 };
 
-var set = function(params) {
+const set = function(params) {
   return lodash.merge(configs, params);
 };
 

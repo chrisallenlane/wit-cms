@@ -11,16 +11,16 @@ module.exports = function(posts, params) {
   }
 
   // convert params to number type
-  var page    = (Number(params.page) >= 1) ? Number(params.page) : 1;
-  var perPage = Number(params.perPage) || 10;
+  const page    = (Number(params.page) >= 1) ? Number(params.page) : 1;
+  const perPage = Number(params.perPage) || 10;
 
   // count from zero
-  var index   = (page >= 1) ? (page - 1) : 0;
+  const index   = (page >= 1) ? (page - 1) : 0;
 
   // slice the array
-  var count   = Math.ceil(posts.length / perPage);
-  var start   = index * perPage;
-  var end     = start + perPage;
+  const count   = Math.ceil(posts.length / perPage);
+  const start   = index * perPage;
+  const end     = start + perPage;
 
   // return the result as an object
   return {

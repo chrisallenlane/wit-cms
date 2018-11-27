@@ -3,7 +3,7 @@ const pad    = require('left-pad');
 
 module.exports = function(posts, params) {
 
-  var date = {};
+  const date = {};
 
   if (params.year) {
     date.year = String(params.year);

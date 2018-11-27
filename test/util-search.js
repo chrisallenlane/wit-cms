@@ -4,8 +4,7 @@ const express = require('express');
 const lodash  = require('lodash');
 const search  = require('../app/util/search').search;
 const test    = require('tape');
-
-var app       = express();
+const app     = express();
 
 // init the app
 Wit(app, config, function(err, wit) {
@@ -23,14 +22,14 @@ Wit(app, config, function(err, wit) {
   test('util-search: should also search by author (posts)', function(t) {
     t.plan(1);
 
-    var posts = search('john', 'posts');
+    const posts = search('john', 'posts');
     t.equals(posts.length, 3);
   });
 
   test('util-search: should return empty array when not found (posts)', function(t) {
     t.plan(1);
 
-    var posts = search('not found', 'posts');
+    const posts = search('not found', 'posts');
     t.equals(posts.length, 0);
   });
 
@@ -47,7 +46,7 @@ Wit(app, config, function(err, wit) {
   test('util-search: should return empty array when not found (pages)', function(t) {
     t.plan(1);
 
-    var pages = search('not found', 'pages');
+    const pages = search('not found', 'pages');
     t.equals(pages.length, 0);
   });
 });

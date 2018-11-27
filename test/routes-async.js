@@ -5,8 +5,7 @@ const express = require('express');
 const lodash  = require('lodash');
 const request = require('supertest');
 const test    = require('tape');
-
-var app = require('./mock/app');
+const app     = require('./mock/app');
 
 // init the app
 Wit(app, config, function(err, wit) {
@@ -21,7 +20,7 @@ Wit(app, config, function(err, wit) {
       .end(function(err, res) {
         t.notOk(err, 'expectations should be met');
 
-        var json = JSON.parse(res.text);
+        const json = JSON.parse(res.text);
         t.ok(json.params, 'should have a params property');
         t.equals(Object.keys(json).length, 1, 'should have correct keys');
         t.equals(json.params.author, 'John Doe', 'should pass correct values');
@@ -39,7 +38,7 @@ Wit(app, config, function(err, wit) {
       .end(function(err, res) {
         t.notOk(err, 'expectations should be met');
 
-        var json = JSON.parse(res.text);
+        const json = JSON.parse(res.text);
         t.ok(json.pages, 'should have a pages property');
         t.equals(Object.keys(json).length, 1 , 'should have correct keys');
         t.equals(Object.keys(json.pages).length, 3, 'should return all pages');
@@ -56,7 +55,7 @@ Wit(app, config, function(err, wit) {
       .end(function(err, res) {
         t.notOk(err, 'expectations should be met');
 
-        var json = JSON.parse(res.text);
+        const json = JSON.parse(res.text);
         t.ok(json.page, 'should have a page property');
         t.equals(Object.keys(json).length, 1 ,'should have correct keys');
         t.equals(json.page.name, 'page-1', 'should return requested page');
@@ -73,7 +72,7 @@ Wit(app, config, function(err, wit) {
       .end(function(err, res) {
         t.notOk(err, 'expectations should be met');
 
-        var json = JSON.parse(res.text);
+        const json = JSON.parse(res.text);
         t.equals(Object.keys(json).length, 1, 'should have correct number of keys');
         t.equals(json.error, 'not found', 'should have appropriate error message');
       });
@@ -89,7 +88,7 @@ Wit(app, config, function(err, wit) {
       .end(function(err, res) {
         t.notOk(err, 'expectations should be met');
 
-        var json = JSON.parse(res.text);
+        const json = JSON.parse(res.text);
         t.equals(Object.keys(json).length, 1, 'should have correct number of keys');
         t.equals(Object.keys(json.posts).length, 3, 'should return all posts');
       });
@@ -105,7 +104,7 @@ Wit(app, config, function(err, wit) {
       .end(function(err, res) {
         t.notOk(err, 'expectations should be met');
 
-        var json = JSON.parse(res.text);
+        const json = JSON.parse(res.text);
         t.ok(
           lodash.isEqual(Object.keys(json), [ 'pagination', 'posts' ]),
           'should return posts and pagination'
@@ -124,7 +123,7 @@ Wit(app, config, function(err, wit) {
       .end(function(err, res) {
         t.notOk(err, 'expectations should be met');
 
-        var json = JSON.parse(res.text);
+        const json = JSON.parse(res.text);
         t.equals(Object.keys(json).length, 1 , 'should have correct keys');
         t.equals(json.post.name, 'post-1', 'should return appropriate post');
       });
@@ -140,7 +139,7 @@ Wit(app, config, function(err, wit) {
       .end(function(err, res) {
         t.notOk(err, 'expectations should be met');
 
-        var json = JSON.parse(res.text);
+        const json = JSON.parse(res.text);
         t.equals(Object.keys(json).length, 1, 'should have correct number of keys');
         t.equals(json.error, 'not found', 'should have appropriate error message');
       });
@@ -156,7 +155,7 @@ Wit(app, config, function(err, wit) {
       .end(function(err, res) {
         t.notOk(err, 'expectations should be met');
 
-        var json = JSON.parse(res.text);
+        const json = JSON.parse(res.text);
         t.equals(Object.keys(json).length, 1, 'should return appropriate json');
         t.equals(json.posts.length, 3, 'should return appropriate posts');
       });
@@ -172,7 +171,7 @@ Wit(app, config, function(err, wit) {
       .end(function(err, res) {
         t.notOk(err, 'expectations should be met');
 
-        var json = JSON.parse(res.text);
+        const json = JSON.parse(res.text);
         t.equals(Object.keys(json).length, 1, 'should return appropriate json');
         t.equals(json.posts.length, 3, 'should return appropriate posts');
       });
@@ -188,7 +187,7 @@ Wit(app, config, function(err, wit) {
       .end(function(err, res) {
         t.notOk(err, 'expectations should be met');
 
-        var json = JSON.parse(res.text);
+        const json = JSON.parse(res.text);
         t.equals(Object.keys(json).length, 1, 'should return appropriate json');
         t.equals(json.posts.length, 1, 'should return appropriate posts');
       });
@@ -204,7 +203,7 @@ Wit(app, config, function(err, wit) {
       .end(function(err, res) {
         t.notOk(err, 'expectations should be met');
 
-        var json = JSON.parse(res.text);
+        const json = JSON.parse(res.text);
         t.equals(json.posts.length, 3, 'should return appropriate posts');
         t.ok(
           lodash.isEqual(Object.keys(json), [ 'pagination', 'posts' ]),
@@ -223,7 +222,7 @@ Wit(app, config, function(err, wit) {
       .end(function(err, res) {
         t.notOk(err, 'expectations should be met');
 
-        var json = JSON.parse(res.text);
+        const json = JSON.parse(res.text);
         t.equals(json.posts.length, 3, 'should return appropriate posts');
         t.ok(
           lodash.isEqual(Object.keys(json), [ 'pagination', 'posts' ]),
@@ -242,7 +241,7 @@ Wit(app, config, function(err, wit) {
       .end(function(err, res) {
         t.notOk(err, 'expectations should be met');
 
-        var json = JSON.parse(res.text);
+        const json = JSON.parse(res.text);
         t.equals(json.posts.length, 1, 'should return appropriate posts');
         t.ok(
           lodash.isEqual(Object.keys(json), [ 'pagination', 'posts' ]),
@@ -261,7 +260,7 @@ Wit(app, config, function(err, wit) {
       .end(function(err, res) {
         t.notOk(err, 'expectations should be met');
 
-        var json = JSON.parse(res.text);
+        const json = JSON.parse(res.text);
         t.equals(Object.keys(json).length, 1, 'should return appropriate json');
         t.equals(json.error, 'not found', 'should have appropriate error message');
       });
@@ -277,7 +276,7 @@ Wit(app, config, function(err, wit) {
       .end(function(err, res) {
         t.notOk(err, 'expectations should be met');
 
-        var json = JSON.parse(res.text);
+        const json = JSON.parse(res.text);
         t.equals(Object.keys(json).length, 1, 'should return appropriate json');
         t.equals(json.error, 'not found', 'should have appropriate error message');
       });
@@ -293,7 +292,7 @@ Wit(app, config, function(err, wit) {
       .end(function(err, res) {
         t.notOk(err, 'expectations should be met');
 
-        var json = JSON.parse(res.text);
+        const json = JSON.parse(res.text);
         t.equals(Object.keys(json).length, 1, 'should return appropriate json');
         t.equals(json.posts.length, 3, 'should return appropriate posts');
       });
@@ -309,7 +308,7 @@ Wit(app, config, function(err, wit) {
       .end(function(err, res) {
         t.notOk(err, 'expectations should be met');
 
-        var json = JSON.parse(res.text);
+        const json = JSON.parse(res.text);
         t.equals(json.posts.length, 3, 'should return appropriate posts');
         t.ok(
           lodash.isEqual(Object.keys(json), [ 'pagination', 'posts' ]),
@@ -328,7 +327,7 @@ Wit(app, config, function(err, wit) {
       .end(function(err, res) {
         t.notOk(err, 'expectations should be met');
 
-        var json = JSON.parse(res.text);
+        const json = JSON.parse(res.text);
         t.equals(Object.keys(json).length, 1, 'should return appropriate json');
         t.equals(json.posts.length, 1, 'should return appropriate posts');
       });
@@ -344,7 +343,7 @@ Wit(app, config, function(err, wit) {
       .end(function(err, res) {
         t.notOk(err, 'expectations should be met');
 
-        var json = JSON.parse(res.text);
+        const json = JSON.parse(res.text);
         t.equals(json.posts.length, 1, 'should return appropriate posts');
         t.ok(
           lodash.isEqual(Object.keys(json), [ 'pagination', 'posts' ]),
@@ -363,7 +362,7 @@ Wit(app, config, function(err, wit) {
       .end(function(err, res) {
         t.notOk(err, 'expectations should be met');
 
-        var json = JSON.parse(res.text);
+        const json = JSON.parse(res.text);
         t.equals(Object.keys(json).length, 1, 'should return appropriate json');
         t.ok(
           lodash.isEqual(json.categories, [ 'bar', 'baz', 'foo' ]),
@@ -382,7 +381,7 @@ Wit(app, config, function(err, wit) {
       .end(function(err, res) {
         t.notOk(err, 'expectations should be met');
 
-        var json = JSON.parse(res.text);
+        const json = JSON.parse(res.text);
         t.equals(Object.keys(json).length, 1, 'should return appropriate json');
         t.ok(
           lodash.isEqual(json.tags, [ 'alpha', 'bravo', 'charlie' ]),
@@ -401,7 +400,7 @@ Wit(app, config, function(err, wit) {
       .end(function(err, res) {
         t.notOk(err, 'expectations should be met');
 
-        var json = JSON.parse(res.text);
+        const json = JSON.parse(res.text);
 
         t.equals(json.posts.length, 3, 'should return appropriate posts');
         t.ok(
@@ -421,7 +420,7 @@ Wit(app, config, function(err, wit) {
       .end(function(err, res) {
         t.notOk(err, 'expectations should be met');
 
-        var json = JSON.parse(res.text);
+        const json = JSON.parse(res.text);
 
         t.equals(json.posts.length, 3, 'should return appropriate posts');
         t.ok(
@@ -441,7 +440,7 @@ Wit(app, config, function(err, wit) {
       .end(function(err, res) {
         t.notOk(err, 'expectations should be met');
 
-        var json = JSON.parse(res.text);
+        const json = JSON.parse(res.text);
 
         t.equals(json.pages.length, 3, 'should return appropriate pages');
         t.ok(
@@ -462,7 +461,7 @@ Wit(app, config, function(err, wit) {
       .end(function(err, res) {
         t.notOk(err, 'expectations should be met');
 
-        var json = JSON.parse(res.text);
+        const json = JSON.parse(res.text);
 
         t.equals(json.pages.length, 1, 'should return appropriate pages');
         t.ok(

@@ -1,9 +1,8 @@
-const search   = require('../util/search').search;
 const config   = require('../boot/config');
-const lodash   = require('lodash');
+const configs  = config();
 const paginate = require('../util/paginate');
+const search   = require('../util/search').search;
 const xss      = require('xss');
-var configs    = config();
 
 module.exports = function (app, wit, callback) {
 
@@ -11,13 +10,13 @@ module.exports = function (app, wit, callback) {
   app.get('/blog/search', function(req, res) {
 
     // sanitize the inputs (they will be fed into the response markup)
-    var query = xss(req.query.q);
+    const query = xss(req.query.q);
 
     // find the appropriate posts
-    var posts = search(query, 'posts');
+    const posts = search(query, 'posts');
     
     // paginate the posts
-    var paginated = paginate(posts, {
+    const paginated = paginate(posts, {
       page    : req.query.p,
       perPage : configs.posts.perPage,
     });
@@ -38,13 +37,13 @@ module.exports = function (app, wit, callback) {
   app.get('/page/search', function(req, res) {
 
     // sanitize the inputs (they will be fed into the response markup)
-    var query = xss(req.query.q);
+    const query = xss(req.query.q);
 
     // find the appropriate pages
-    var pages = search(query, 'pages');
+    const pages = search(query, 'pages');
     
     // paginate the pages
-    var paginated = paginate(pages, {
+    const paginated = paginate(pages, {
       page    : req.query.p,
       perPage : configs.posts.perPage,
     });
