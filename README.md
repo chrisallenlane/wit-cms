@@ -1,7 +1,6 @@
 [![Build Status](https://travis-ci.org/chrisallenlane/wit-cms.svg)](https://travis-ci.org/chrisallenlane/wit-cms)
 [![npm](https://img.shields.io/npm/v/wit-cms.svg)]()
 [![npm](https://img.shields.io/npm/dt/wit-cms.svg)]()
-[![Known Vulnerabilities](https://snyk.io/test/npm/wit-cms/badge.svg)](https://snyk.io/test/npm/wit-cms)
 
 
 wit-cms
