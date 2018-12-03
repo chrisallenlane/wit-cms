@@ -50,6 +50,38 @@ Wit(app, config, function(err, wit) {
       });
   });
 
+  test('routes-tag: tag index - sort newest-first', function(t) {
+    t.plan(4);
+
+    request(app)
+      .get('/blog/tag/alpha')
+      .expect('Content-Type', /html/)
+      .expect(200)
+      .end(function(err, res) {
+        t.notOk(err, 'expectations should be met');
+
+        const $ = cheerio.load(res.text);
+
+        t.equals(
+          $('h2:nth-child(1)').text(),
+          'Post Three',
+          'must display newest-first (1)'
+        );
+
+        t.equals(
+          $('h2:nth-child(2)').text(),
+          'Post Two',
+          'must display newest-first (2)'
+        );
+
+        t.equals(
+          $('h2:nth-child(3)').text(),
+          'Post One',
+          'must display newest-first (3)'
+        );
+      });
+  });
+
   test('routes-tag: malicious tag', function(t) {
     t.plan(5);
 

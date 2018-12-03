@@ -2,6 +2,7 @@ const config   = require('../boot/config');
 const configs  = config();
 const lodash   = require('lodash');
 const paginate = require('../util/paginate');
+const sort     = require('../util/sort');
 const xss      = require('xss');
 
 module.exports = function(app, wit, callback) {
@@ -13,7 +14,7 @@ module.exports = function(app, wit, callback) {
     const tag   = xss(req.params.tag);
 
     // find the appropriate posts
-    const posts = lodash.filter(wit.posts, { tags: [ tag ] });
+    const posts = sort(lodash.filter(wit.posts, { tags: [ tag ] }));
 
     // paginate the posts
     const paginated = paginate(posts, {

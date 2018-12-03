@@ -1,6 +1,7 @@
 const archive  = require('../util/archive');
 const config   = require('../boot/config');
 const paginate = require('../util/paginate');
+const sort     = require('../util/sort');
 const xss      = require('xss');
 
 module.exports = function (app, wit, callback) {
@@ -14,11 +15,11 @@ module.exports = function (app, wit, callback) {
     const day   = xss(req.params.day);
 
     // find the appropriate posts
-    const posts = archive(wit.posts, {
+    const posts = sort(archive(wit.posts, {
       year  : year,
       month : month,
       day   : day,
-    });
+    }));
     
     // paginate the posts
     const paginated = paginate(posts, {

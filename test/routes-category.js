@@ -50,6 +50,32 @@ Wit(app, config, function(err, wit) {
       });
   });
 
+  test('routes-category: category index - sort newest-first', function(t) {
+    t.plan(3);
+
+    request(app)
+      .get('/blog/category/bar')
+      .expect('Content-Type', /html/)
+      .expect(200)
+      .end(function(err, res) {
+        t.notOk(err, 'expectations should be met');
+
+        const $ = cheerio.load(res.text);
+
+        t.equals(
+          $('h2:nth-child(1)').text(),
+          'Post Two',
+          'must display newest-first (1)'
+        );
+
+        t.equals(
+          $('h2:nth-child(2)').text(),
+          'Post One',
+          'must display newest-first (2)'
+        );
+      });
+  });
+
   test('routes-category: malicious category', function(t) {
     t.plan(1);
 
