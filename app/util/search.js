@@ -1,24 +1,10 @@
-const config  = require('../boot/config');
-const configs = config();
-const lodash  = require('lodash');
-const lunr    = require('lunr');
-const boost   = configs.search.boost;
+const config = require('../boot/config');
+const lodash = require('lodash');
+const lunr   = require('lunr');
+const boost  = config().search.boost;
 
-// lunr post index
-const postIndex = lunr(function() {
-  this.field('title'       , { boost: boost.title       });
-  this.field('description' , { boost: boost.description });
-  this.field('excerpt'     , { boost: boost.excerpt     });
-  this.field('content'     , { boost: boost.content     });
-  this.field('author'      , { boost: boost.author      });
-});
-
-// lunr page index
-const pageIndex = lunr(function() {
-  this.field('title'       , { boost: boost.title       });
-  this.field('description' , { boost: boost.description });
-  this.field('content'     , { boost: boost.content     });
-});
+var postIndex;
+var pageIndex;
 
 var pages;
 var posts;
@@ -30,26 +16,51 @@ module.exports.initialize = function(wit) {
   pages = wit.pages;
   posts = wit.posts;
 
-  // add the posts to the post index
-  lodash.forEach(posts, function(post) {
-    postIndex.add({
-      title       : post.title,
-      description : post.description,
-      excerpt     : post.excerpt,
-      content     : post.content,
-      author      : post.author,
-      id          : post.name,
+  // lunr post index
+  postIndex = lunr(function() {
+    const that = this;
+
+    // define the fields
+    this.field('title'       , { boost: boost.title       });
+    this.field('description' , { boost: boost.description });
+    this.field('excerpt'     , { boost: boost.excerpt     });
+    this.field('content'     , { boost: boost.content     });
+    this.field('author'      , { boost: boost.author      });
+
+    // add the posts to the post index
+    lodash.forEach(posts, function(post) {
+      that.add({
+        title       : post.title,
+        description : post.description,
+        excerpt     : post.excerpt,
+        content     : post.content,
+        author      : post.author,
+        id          : post.name,
+      });
     });
+
   });
 
-  // add the pages to the page index
-  lodash.forEach(pages, function(page) {
-    pageIndex.add({
-      title       : page.title,
-      description : page.description,
-      content     : page.content,
-      id          : page.name,
+
+  // lunr page index
+  pageIndex = lunr(function() {
+    const that = this;
+
+    // define the fields
+    this.field('title'       , { boost: boost.title       });
+    this.field('description' , { boost: boost.description });
+    this.field('content'     , { boost: boost.content     });
+
+    // add the pages to the page index
+    lodash.forEach(pages, function(page) {
+      that.add({
+        title       : page.title,
+        description : page.description,
+        content     : page.content,
+        id          : page.name,
+      });
     });
+
   });
 };
 
