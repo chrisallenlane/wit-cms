@@ -1,51 +1,53 @@
-const Wit     = require('../index');
-const config  = require('./mock/config');
-const express = require('express');
-const lodash  = require('lodash');
-const test    = require('tape');
-const app     = express();
+const configDefault = require('../app/boot-config');
+const configMock    = require('./mock/config');
+const lodash        = require('lodash');
+const test          = require('tape');
 
-// init the app
-Wit(app, config, function(err, wit) {
 
-  test('boot-pages: must properly structure pages', function(t) {
-    t.plan(19);
+test('boot-pages: must properly structure pages', function(t) {
+  t.plan(19);
 
-    // enumerate the valid page properties
-    const pageProperties = [
-      'name',
-      'url',
-      'title',
-      'description',
-      'content',
-    ];
+  // load the configs
+  const configs = lodash.merge(configDefault, configMock);
 
-    // assert that the correct number of pages have loaded
-    t.equals(Object.keys(wit.pages).length, 3);
+  // load the pages
+  const pages = require('../app/boot-pages')(configs);
 
-    // assert that each page has the correct properties
-    t.equals(wit.pages['page-1'].name        , 'page-1');
-    t.equals(wit.pages['page-1'].url         , '/page-1');
-    t.equals(wit.pages['page-1'].title       , 'Page One');
-    t.equals(wit.pages['page-1'].description , 'This is the first page.');
-    t.equals(wit.pages['page-1'].content     , '<p>This is page one.</p>\n');
-    t.ok(lodash.isEqual(Object.keys(wit.pages['page-1']), pageProperties));
+  // enumerate the valid page properties
+  const pageProperties = [
+    'name',
+    'url',
+    'title',
+    'description',
+    'content',
+  ];
 
-    t.equals(wit.pages['page-2'].name        , 'page-2');
-    t.equals(wit.pages['page-2'].url         , '/page-2');
-    t.equals(wit.pages['page-2'].title       , 'Page Two');
-    t.equals(wit.pages['page-2'].description , 'This is the second page.');
-    t.equals(wit.pages['page-2'].content     , '<p>This is page two.</p>\n');
-    t.ok(lodash.isEqual(Object.keys(wit.pages['page-2']), pageProperties));
+  // assert that the correct number of pages have loaded
+  t.equals(Object.keys(pages).length, 3);
 
-    t.equals(wit.pages['page-3'].name        , 'page-3');
-    t.equals(wit.pages['page-3'].url         , '/page-3');
-    t.equals(wit.pages['page-3'].title       , 'Page Three');
-    t.equals(wit.pages['page-3'].description , 'This is the third page.');
-    t.equals(wit.pages['page-3'].content     , '<p>This is page three.</p>\n');
-    t.ok(lodash.isEqual(
-      Object.keys(wit.pages['page-3']).sort(),
-      lodash.concat(pageProperties, 'view').sort()
-    ));
-  });
+  // assert that each page has the correct properties
+  t.equals(pages['page-1'].name        , 'page-1');
+  t.equals(pages['page-1'].url         , '/page-1');
+  t.equals(pages['page-1'].title       , 'Page One');
+  t.equals(pages['page-1'].description , 'This is the first page.');
+  t.equals(pages['page-1'].content     , '<p>This is page one.</p>\n');
+  t.ok(lodash.isEqual(Object.keys(pages['page-1']), pageProperties));
+
+  t.equals(pages['page-2'].name        , 'page-2');
+  t.equals(pages['page-2'].url         , '/page-2');
+  t.equals(pages['page-2'].title       , 'Page Two');
+  t.equals(pages['page-2'].description , 'This is the second page.');
+  t.equals(pages['page-2'].content     , '<p>This is page two.</p>\n');
+  t.ok(lodash.isEqual(Object.keys(pages['page-2']), pageProperties));
+
+  t.equals(pages['page-3'].name        , 'page-3');
+  t.equals(pages['page-3'].url         , '/page-3');
+  t.equals(pages['page-3'].title       , 'Page Three');
+  t.equals(pages['page-3'].description , 'This is the third page.');
+  t.equals(pages['page-3'].content     , '<p>This is page three.</p>\n');
+  t.ok(lodash.isEqual(
+    Object.keys(pages['page-3']).sort(),
+    lodash.concat(pageProperties, 'view').sort()
+  ));
+
 });

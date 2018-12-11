@@ -3,6 +3,33 @@
 [![npm](https://img.shields.io/npm/dt/wit-cms.svg)]()
 
 
+TODO:
+- `searchable` page property
+- update the `README`
+  - upgrading
+  - page structure
+  - `searchable` property
+  - revisit config structure
+- update wit-bootstrap
+- "home" url or whatever
+- custom urls
+- check for unused dependencies and requires
+        // TODO: make note in the README that description and
+        // excerpt are indexed. (One is missing now.)
+
+
+New Features / Changes
+------------
+- Changed config structure
+- Syntax-highlighting out-of-the-box with highlight.js
+- Cleaner architecture
+- `searchable` property
+- native support for "home" and "404" page
+- custom urls
+
+
+
+
 wit-cms
 =======
 `wit-cms` is a flat-file, "blog aware", publishing platform for [Express][].

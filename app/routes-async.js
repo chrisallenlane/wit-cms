@@ -1,11 +1,8 @@
-const archive   = require('../util/archive');
-const config    = require('../boot/config');
-const configs   = config();
+const archive   = require('./util-archive');
 const lodash    = require('lodash');
-const paginate  = require('../util/paginate');
-const search    = require('../util/search').search;
-const sort      = require('../util/sort');
-const asyncRoot = configs.path.asyncRoot;
+const paginate  = require('./util-paginate');
+const search    = require('./util-search');
+const sort      = require('./util-sort');
 
 
 // helper functions
@@ -15,23 +12,26 @@ const send = function(res, response) {
   res.send(response);
 };
 
-// "wrapped paginate"
-const wpaginate = function(response, p) {
-  return (p)
-    ? paginate(response, { page : p, perPage : configs.posts.perPage })
-    : { posts: sort(response) };
-};
-
 const notfound = function() {
   return { error: 'not found'};
 };
 
-module.exports = function(app, wit, callback) {
+module.exports = function(configs, app, wit) {
 
   // short-circuit if async routes are disabled
-  if (! configs.enableAsyncRoutes) {
-    return callback();
+  if (! configs.async.enabled) {
+    return;
   }
+
+  // for convenience
+  const asyncRoot = configs.async.root;
+
+  // helper: "wrapped paginate"
+  const wpaginate = function(response, p) {
+    return (p)
+      ? paginate(response, { page : p, perPage : configs.posts.perPage })
+      : { posts: sort(response) };
+  };
 
   // returns the site configs
   app.get(asyncRoot + 'params', function(req, res) {
@@ -40,7 +40,6 @@ module.exports = function(app, wit, callback) {
 
   // returns all pages
   app.get(asyncRoot + 'pages', function(req, res) {
-
     const response = (wit.pages)
       ? { pages: wit.pages }
       : notfound();
@@ -50,9 +49,7 @@ module.exports = function(app, wit, callback) {
 
   // search: returns pages matching query
   app.get(asyncRoot + 'pages/search', function(req, res) {
-
-    const pages = search(req.query.q, 'pages');
-
+    const pages    = search(req.query.q, wit.pages, wit.index.page);
     const response = (pages)
       ? wpaginate(pages, req.query.p)
       : notfound();
@@ -66,7 +63,6 @@ module.exports = function(app, wit, callback) {
 
   // returns the specified page
   app.get(asyncRoot + 'pages/:title', function(req, res) {
-
     const response = (wit.pages[req.params.title])
       ? { page : wit.pages[req.params.title] }
       : notfound();
@@ -76,7 +72,6 @@ module.exports = function(app, wit, callback) {
 
   // returns all posts, optionally paginated
   app.get(asyncRoot + 'blog', function(req, res) {
-
     const response = (wit.posts)
       ? wpaginate(wit.posts, req.query.p)
       : notfound();
@@ -86,7 +81,6 @@ module.exports = function(app, wit, callback) {
 
   // returns a specific post
   app.get(asyncRoot + 'blog/post/:title', function(req, res) {
-    
     const response = (wit.posts[req.params.title])
       ? { post : wit.posts[req.params.title] }
       : notfound();
@@ -96,9 +90,7 @@ module.exports = function(app, wit, callback) {
   
   // returns posts belonging to :category, optionally paginated
   app.get(asyncRoot + 'blog/category/:category', function(req, res) {
-
-    const posts = lodash.filter(wit.posts, { categories: [ req.params.category ] });
-
+    const posts    = lodash.filter(wit.posts, { categories: [ req.params.category ] });
     const response = (posts)
       ? wpaginate(posts, req.query.p)
       : notfound();
@@ -108,9 +100,7 @@ module.exports = function(app, wit, callback) {
   
   // returns posts belonging to :tag, optionally paginated
   app.get(asyncRoot + 'blog/tag/:tag', function(req, res) {
-
-    const posts = lodash.filter(wit.posts, { tags: [ req.params.tag ] });
-
+    const posts    = lodash.filter(wit.posts, { tags: [ req.params.tag ] });
     const response = (posts)
       ? wpaginate(posts, req.query.p)
       : notfound();
@@ -120,7 +110,6 @@ module.exports = function(app, wit, callback) {
 
   // returns the specified archive
   app.get(asyncRoot + 'blog/archive/:year/:month?/:day?', function(req, res) {
-
     const posts = archive(wit.posts, {
       year  : req.params.year,
       month : req.params.month,
@@ -136,9 +125,7 @@ module.exports = function(app, wit, callback) {
   
   // search: returns blog posts matching query
   app.get(asyncRoot + 'blog/search', function(req, res) {
-
-    const posts = search(req.query.q, 'posts');
-
+    const posts    = search(req.query.q, wit.posts, wit.index.post);
     const response = (posts)
       ? wpaginate(posts, req.query.p)
       : notfound();
@@ -155,6 +142,4 @@ module.exports = function(app, wit, callback) {
   app.get(asyncRoot + 'tags', function(req, res) {
     send(res, { tags: wit.tags || [] });
   });
-
-  callback();
 };

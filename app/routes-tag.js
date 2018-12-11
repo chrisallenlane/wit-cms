@@ -1,11 +1,9 @@
-const config   = require('../boot/config');
-const configs  = config();
 const lodash   = require('lodash');
-const paginate = require('../util/paginate');
-const sort     = require('../util/sort');
+const paginate = require('./util-paginate');
+const sort     = require('./util-sort');
 const xss      = require('xss');
 
-module.exports = function(app, wit, callback) {
+module.exports = function(configs, app, wit) {
 
   // tag index page
   app.get('/blog/tag/:tag', function(req, res) {
@@ -34,5 +32,4 @@ module.exports = function(app, wit, callback) {
     });
   });
 
-  callback();
 };

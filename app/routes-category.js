@@ -1,10 +1,9 @@
-const config   = require('../boot/config');
 const lodash   = require('lodash');
-const paginate = require('../util/paginate');
-const sort     = require('../util/sort');
+const paginate = require('./util-paginate');
+const sort     = require('./util-sort');
 const xss      = require('xss');
 
-module.exports = function(app, wit, callback) {
+module.exports = function(configs, app, wit) {
 
   // category index page
   app.get('/blog/category/:category', function(req, res) {
@@ -18,7 +17,7 @@ module.exports = function(app, wit, callback) {
     // paginate the posts
     const paginated = paginate(posts, {
       page    : req.query.p,
-      perPage : config().posts.perPage,
+      perPage : configs.posts.perPage,
     });
 
     res.render('category', {
@@ -33,5 +32,4 @@ module.exports = function(app, wit, callback) {
     });
   });
 
-  callback();
 };

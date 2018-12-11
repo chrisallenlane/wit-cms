@@ -1,5 +1,8 @@
 module.exports = {
 
+  // build configs
+  build: {},
+
   // site configs
   params: {
     author  : 'John Doe',
@@ -21,13 +24,6 @@ module.exports = {
       units  : 'paragraphs',
     },
     perPage : 5,
-  },
-
-  // allows for arbitrary modifications on the wit object
-  // before it is returned to express
-  init: function(app, wit, callback) {
-    wit.foo = 'bar';
-    return callback();
   },
 
 };

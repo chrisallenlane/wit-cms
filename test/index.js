@@ -1,23 +1,37 @@
-const Wit     = require('../index');
-const config  = require('./mock/config');
-const express = require('express');
-const lodash  = require('lodash');
-const test    = require('tape');
-const app     = express();
+const test   = require('tape');
 
-// init the app
-Wit(app, config, function(err, wit) {
+// initialize a wit app instance
+const Wit    = require('../app/index');
+const app    = require('./mock/app');
+const config = require('./mock/config');
 
-  test('index: custom properties must bind', function(t) {
-    t.plan(3);
-    t.ok(wit.params, 'must have bound');
-    t.equals(wit.params.author, 'John Doe', 'must have correct value');
-    t.equals(wit.params.fqdn, 'https://example.com', 'must have correct value');
-  });
 
-  test('index: user-specified "init" function', function(t) {
-    t.plan(1);
-    t.equals(wit.foo, 'bar', 'must provide for mutations on the wit object');
-  });
+test('index: build.before should execute', function(t) {
+  t.plan(1);
 
+  // mock a build.before initilizer function
+  config.build.before = function (configs, app, wit) {
+    wit.executed = true;
+  };
+
+  // initialize a wit application
+  const wit = Wit(app, config);
+
+  // assert that the function executed
+  t.equals(wit.executed, true);
+});
+
+test('index: build.after should execute', function(t) {
+  t.plan(1);
+
+  // mock a build.after initilizer function
+  config.build.after = function (configs, app, wit) {
+    wit.executed = true;
+  };
+
+  // initialize a wit application
+  const wit = Wit(app, config);
+
+  // assert that the function executed
+  t.equals(wit.executed, true);
 });

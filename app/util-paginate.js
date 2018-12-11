@@ -1,4 +1,4 @@
-const sort = require('./sort');
+const sort = require('./util-sort');
 
 module.exports = function(posts, params) {
 

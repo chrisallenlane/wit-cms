@@ -1,7 +1,7 @@
 const lodash = require('lodash');
 const moment = require('moment');
 
-module.exports = function(app, wit, callback) {
+module.exports = function(configs, app, wit) {
   const urlSet = lodash.values(wit.pages).concat(lodash.values(wit.posts));
 
   app.get('/sitemap.xml', function(req, res) {
@@ -16,5 +16,4 @@ module.exports = function(app, wit, callback) {
     });
   });
 
-  callback();
 };

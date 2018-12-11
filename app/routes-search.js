@@ -1,10 +1,8 @@
-const config   = require('../boot/config');
-const configs  = config();
-const paginate = require('../util/paginate');
-const search   = require('../util/search').search;
+const paginate = require('./util-paginate');
+const search   = require('./util-search');
 const xss      = require('xss');
 
-module.exports = function (app, wit, callback) {
+module.exports = function (configs, app, wit) {
 
   // blog search route
   app.get('/blog/search', function(req, res) {
@@ -13,8 +11,8 @@ module.exports = function (app, wit, callback) {
     const query = xss(req.query.q);
 
     // find the appropriate posts
-    const posts = search(query, 'posts');
-    
+    const posts = search(query, wit.posts, wit.index.post);
+
     // paginate the posts
     const paginated = paginate(posts, {
       page    : req.query.p,
@@ -40,8 +38,8 @@ module.exports = function (app, wit, callback) {
     const query = xss(req.query.q);
 
     // find the appropriate pages
-    const pages = search(query, 'pages');
-    
+    const pages = search(query, wit.pages, wit.index.page);
+
     // paginate the pages
     const paginated = paginate(pages, {
       page    : req.query.p,
@@ -60,5 +58,4 @@ module.exports = function (app, wit, callback) {
     });
   });
 
-  callback();
 };

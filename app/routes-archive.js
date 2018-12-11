@@ -1,10 +1,9 @@
-const archive  = require('../util/archive');
-const config   = require('../boot/config');
-const paginate = require('../util/paginate');
-const sort     = require('../util/sort');
+const archive  = require('./util-archive');
+const paginate = require('./util-paginate');
+const sort     = require('./util-sort');
 const xss      = require('xss');
 
-module.exports = function (app, wit, callback) {
+module.exports = function (configs, app, wit) {
 
   // archive by day
   app.get('/blog/archive/:year/:month?/:day?', function(req, res) {
@@ -24,7 +23,7 @@ module.exports = function (app, wit, callback) {
     // paginate the posts
     const paginated = paginate(posts, {
       page    : req.query.p,
-      perPage : config().posts.perPage,
+      perPage : configs.posts.perPage,
     });
 
     res.render('archive', {
@@ -44,5 +43,4 @@ module.exports = function (app, wit, callback) {
     });
   });
 
-  callback();
 };

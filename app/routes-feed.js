@@ -1,14 +1,13 @@
-const config   = require('../boot/config');
 const moment   = require('moment');
-const paginate = require('../util/paginate');
+const paginate = require('./util-paginate');
 
-module.exports = function (app, wit, callback) {
+module.exports = function (configs, app, wit) {
 
   app.get('/feed', function(req, res) {
 
     const paginated = paginate(wit.posts, {
       page    : req.query.p,
-      perPage : config().posts.perPage,
+      perPage : configs.posts.perPage,
     });
 
     res.set('content-type', 'application/xml');
@@ -22,5 +21,4 @@ module.exports = function (app, wit, callback) {
     });
   });
 
-  callback();
 };
