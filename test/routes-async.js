@@ -41,7 +41,7 @@ test('routes-async: all pages', function(t) {
       const json = JSON.parse(res.text);
       t.ok(json.pages, 'should have a pages property');
       t.equals(Object.keys(json).length, 1 , 'should have correct keys');
-      t.equals(Object.keys(json.pages).length, 3, 'should return all pages');
+      t.equals(Object.keys(json.pages).length, 4, 'should return all pages');
     });
 });
 
@@ -442,6 +442,8 @@ test('routes-async: pages by search (raw)', function(t) {
 
       const json = JSON.parse(res.text);
 
+      // NB: we want to return 3 pages instead of 4 because page 4 has
+      // `searchable` set to `false`.
       t.equals(json.pages.length, 3, 'should return appropriate pages');
       t.ok(
         lodash.isEqual(Object.keys(json), [ 'pages' ]),

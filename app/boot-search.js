@@ -22,6 +22,12 @@ module.exports = function(configs, corpus) {
 
     // index each item in the corpus
     lodash.forEach(corpus, function(item) {
+
+      // exclude posts that are not `searchable`
+      if (item.searchable === false) {
+        return;
+      }
+
       that.add({
         title       : item.title,
         description : item.description,

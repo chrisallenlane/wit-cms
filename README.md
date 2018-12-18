@@ -4,7 +4,6 @@
 
 
 TODO:
-- `searchable` page property
 - update the `README`
   - upgrading
   - page structure

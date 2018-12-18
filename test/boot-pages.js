@@ -5,7 +5,7 @@ const test          = require('tape');
 
 
 test('boot-pages: must properly structure pages', function(t) {
-  t.plan(19);
+  t.plan(25);
 
   // load the configs
   const configs = lodash.merge(configDefault, configMock);
@@ -23,7 +23,7 @@ test('boot-pages: must properly structure pages', function(t) {
   ];
 
   // assert that the correct number of pages have loaded
-  t.equals(Object.keys(pages).length, 3);
+  t.equals(Object.keys(pages).length, 4);
 
   // assert that each page has the correct properties
   t.equals(pages['page-1'].name        , 'page-1');
@@ -45,6 +45,14 @@ test('boot-pages: must properly structure pages', function(t) {
   t.equals(pages['page-3'].title       , 'Page Three');
   t.equals(pages['page-3'].description , 'This is the third page.');
   t.equals(pages['page-3'].content     , '<p>This is page three.</p>\n');
+
+  t.equals(pages['page-4'].name        , 'page-4');
+  t.equals(pages['page-4'].url         , '/page-4');
+  t.equals(pages['page-4'].title       , 'Page Four');
+  t.equals(pages['page-4'].description , 'This is the fourth page.');
+  t.equals(pages['page-4'].content     , '<p>This is page four.</p>\n');
+  t.equals(pages['page-4'].searchable  , false);
+
   t.ok(lodash.isEqual(
     Object.keys(pages['page-3']).sort(),
     lodash.concat(pageProperties, 'view').sort()
