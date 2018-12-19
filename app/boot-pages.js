@@ -1,6 +1,7 @@
 const Remarkable = require('remarkable');
 const fm         = require('json-front-matter');
 const fs         = require('fs');
+const lodash     = require('lodash');
 const path       = require('path');
 
 module.exports = function(configs) {
@@ -40,8 +41,8 @@ module.exports = function(configs) {
     // ignore non-markdown files
     if (configs.markdown.extensions.indexOf(extension)) {
 
-      // assemble what will be the pages's URL
-      page.url  = '/' + page.name;
+      // assemble the page's URL
+      page.url = '/' + lodash.trimStart(page.url || page.name);
 
       // read the file
       page.raw = fs.readFileSync(configs.pages.dir + file, 'utf8');

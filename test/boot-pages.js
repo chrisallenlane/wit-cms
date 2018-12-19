@@ -47,7 +47,7 @@ test('boot-pages: must properly structure pages', function(t) {
   t.equals(pages['page-3'].content     , '<p>This is page three.</p>\n');
 
   t.equals(pages['page-4'].name        , 'page-4');
-  t.equals(pages['page-4'].url         , '/page-4');
+  t.equals(pages['page-4'].url         , '/product/widgets/large');
   t.equals(pages['page-4'].title       , 'Page Four');
   t.equals(pages['page-4'].description , 'This is the fourth page.');
   t.equals(pages['page-4'].content     , '<p>This is page four.</p>\n');
