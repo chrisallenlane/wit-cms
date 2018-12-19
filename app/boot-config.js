@@ -52,7 +52,7 @@ module.exports = {
   pages: {
     dir      : './pages/',             // directory in which markdown page files are located
     notFound : '/not-found',           // 404 "not found" page url
-    home     : '/blog',                // TODO
+    home     : false,                  // page to which '/' should be 302 redirected
   },
 
   // post configs

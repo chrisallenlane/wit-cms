@@ -9,12 +9,11 @@ TODO:
   - page structure
   - `searchable` property
   - revisit config structure
+  - home 302 redirect
 - update wit-bootstrap
-- "home" url or whatever
-- custom urls
-- check for unused dependencies and requires
-        // TODO: make note in the README that description and
-        // excerpt are indexed. (One is missing now.)
+
+// TODO: make note in the README that description and
+// excerpt are indexed. (One is missing now.)
 
 
 New Features / Changes
