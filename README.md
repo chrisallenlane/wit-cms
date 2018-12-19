@@ -1,31 +1,6 @@
-[![Build Status](https://travis-ci.org/chrisallenlane/wit-cms.svg)](https://travis-ci.org/chrisallenlane/wit-cms)
+[![Build Status](https://travis-ci.org/wit-cms/wit-cms.svg)](https://travis-ci.org/wit-cms/wit-cms)
 [![npm](https://img.shields.io/npm/v/wit-cms.svg)]()
 [![npm](https://img.shields.io/npm/dt/wit-cms.svg)]()
-
-
-TODO:
-- update the `README`
-  - upgrading
-  - page structure
-  - `searchable` property
-  - revisit config structure
-  - home 302 redirect
-- update wit-bootstrap
-
-// TODO: make note in the README that description and
-// excerpt are indexed. (One is missing now.)
-
-
-New Features / Changes
-------------
-- Changed config structure
-- Syntax-highlighting out-of-the-box with highlight.js
-- Cleaner architecture
-- `searchable` property
-- native support for "home" and "404" page
-- custom urls
-
-
 
 
 wit-cms
@@ -42,11 +17,13 @@ appropriate directories. `wit-cms` will generate everything else automatically,
 including:
 
 - express routes (both sync and async)
+- a "home" page
 - "pages" and "posts" (with "read more" links and pagination)
 - "tag" and "category" taxonomies
 - blog search and archive
 - a `sitemap.xml`
 - an RSS feed
+- syntax-highlighting on all content via [highlight.js][].
 
 On application start, `wit-cms` loads all site content into an in-memory
 object, making it possible to serve content without reading a disk. This makes
@@ -67,7 +44,7 @@ To spare yourself the tedium of having to write boilerplate templating,
 however, it may be preferable to clone the `wit-bootstrap` repository and
 modify from there. This is the recommended approach for using `wit-cms`:
 
-https://github.com/chrisallenlane/wit-bootstrap
+https://github.com/wit-cms/wit-bootstrap
 
 
 Creating Content
@@ -108,8 +85,19 @@ Pages will have a similar, but sparser, header:
 {{{
 "title"       : "About Me",
 "description" : "The page description."
+"url"         : /about-me,
+"searchable"  : true
 }}}
 ```
+
+The `url` property provides a mechanism to specify the URL at which the page
+should be published. This parameter is optional, and defaults to the name of
+the corresponding markdown file. (Example: `about-me.md` will publish by
+default to `/about-me`.)
+
+The `searchable` property provides a mechanism for excluding pages from
+appearing in search results. The `searchable` parameter is optional, and
+defaults to `true`.
 
 Beyond the above, any additional properties specified in front-matter will be
 made available to the corresponding rendered views as page locals. 
@@ -121,6 +109,7 @@ Routes
 
 ### Synchronous ###
 
+- `/`
 - `/:page`
 - `/page/search`
 - `/blog/`
@@ -147,7 +136,7 @@ Routes
 - `/async/categories`
 - `/async/params`
 
-(The asyncronous routes return JSON responses.)
+The asyncronous routes return JSON responses.
 
 Objects
 -------
@@ -182,6 +171,11 @@ wit {
     'etc',
   ],
 
+  index: {
+    page: aLunrIndex,
+    post: aLunrIndex,
+  },
+
   params: {
     // arbitrary params specified on initialization
   },
@@ -206,6 +200,7 @@ Whereby a post object takes the following shape:
     pretty   : '2 April 2014', // configurable
     unix     : '1396411200',
     year     : '2014',
+  excerpt: '<p>Content before the break.</p>',
   content: '<p>The page content.</p>',
 }
 ```
@@ -250,25 +245,27 @@ var config = {
     name    : 'Example Website',
     tagLine : 'An example site made using wit-cms',
   },
+
+  // 302 redirect '/' to this page
+  pages: {
+    home: '/about-me'
+  },
   
 };
 
-Wit(app, config, function(err, wit) {
-
-  // continue building the express app here as desired
-
-});
+// initialize the wit instance
+const wit = Wit(app, config);
 ```
 
-Note that arbitrary properties may be attached to `config.params`.  These
+Note that arbitrary properties may be attached to `config.params`. These
 properties will be made available to page templates via the returned `wit`
 object as `wit.params`.
 
 
 Searching
 ---------
-`wit-cms` provides for searching among blog posts via the [`lunr`][lunr]
-module.
+`wit-cms` provides for searching among pages and blog posts via the
+[`lunr`][lunr] module.
 
 
 Commenting
@@ -306,6 +303,7 @@ License
 [Disqus]:            http://disqus.com/
 [Express]:           http://expressjs.com/
 [Jekyll]:            http://jekyllrb.com/
+[highlight.js]:      https://highlightjs.org/
 [isso]:              https://github.com/posativ/isso
 [json-front-matter]: https://www.npmjs.org/package/json-front-matter
 [lunr]:              https://www.npmjs.com/package/lunr
