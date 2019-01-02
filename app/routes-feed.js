@@ -3,7 +3,7 @@ const paginate = require('./util-paginate');
 
 module.exports = function (configs, app, wit) {
 
-  app.get('/feed', function(req, res) {
+  app.get(['/feed', '/feed.xml'], function(req, res) {
 
     const paginated = paginate(wit.posts, {
       page    : req.query.p,
