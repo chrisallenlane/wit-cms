@@ -22,8 +22,12 @@ module.exports = function(app, configsUser) {
 
   // initialize the search indeces
   wit.index      = {
-    page: search(configs, wit.pages),
-    post: search(configs, wit.posts),
+    page : search(configs, wit.pages),
+    post : search(configs, wit.posts),
+    all  : search(
+      configs,
+      lodash.values(wit.pages).concat(lodash.values(wit.posts)
+    )),
   };
 
   // user hook to allow content pre-processing

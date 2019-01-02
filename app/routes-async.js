@@ -142,4 +142,28 @@ module.exports = function(configs, app, wit) {
   app.get(asyncRoot + 'tags', function(req, res) {
     send(res, { tags: wit.tags || [] });
   });
+
+  // search: returns blog posts AND pages matching query
+  app.get(asyncRoot + 'search', function(req, res) {
+    // Combine the pages and posts into a single corpus
+    //
+    // NB: it's computationally inefficient to re-assemble this
+    // collection with each search, but it may not be worth the
+    // RAM to keep it bufferred.
+    const combined = {};
+    lodash.assign(combined, wit.pages, wit.posts);
+
+    const posts = search(
+      req.query.q,
+      combined,
+      wit.index.all
+    );
+
+    const response = (posts)
+      ? wpaginate(posts, req.query.p)
+      : notfound();
+
+    send(res, response);
+  });
+
 };

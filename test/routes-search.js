@@ -244,3 +244,121 @@ test('routes-search: malicious search (pages)', function(t) {
       );
   });
 });
+
+test('routes-search: search index (all)', function(t) {
+  t.plan(6);
+
+  request(app)
+    .get('/search')
+    .query({ q: 'third' })
+    .expect('Content-Type', /html/)
+    .expect(200)
+    .end(function(err, res) {
+      t.notOk(err, 'expectations should be met');
+
+      const $ = cheerio.load(res.text);
+
+      t.equals(
+        $('meta[name=view]').attr('content'),
+        'search',
+        'must use the correct view'
+      );
+      t.equals(
+        $('title').text(),
+        'search',
+        'must have correct title'
+      );
+      t.equals(
+        $('link[rel=canonical]').attr('href'),
+        '/search?q=third',
+        'must have the appropriate cannonical url'
+      );
+      t.equals(
+        $('h1').text(),
+        'third',
+        'must have correct h1'
+      );
+      t.equals(
+        $('h2').length,
+        2,
+        'must return the correct content'
+      );
+  });
+});
+
+test('routes-search: invalid search (all)', function(t) {
+  t.plan(6);
+
+  request(app)
+    .get('/search')
+    .query({ q: 'quux' })
+    .expect('Content-Type', /html/)
+    .expect(200)
+    .end(function(err, res) {
+      t.notOk(err, 'expectations should be met');
+
+      const $ = cheerio.load(res.text);
+
+      t.equals(
+        $('meta[name=view]').attr('content'),
+        'search',
+        'must use the correct view'
+      );
+      t.equals(
+        $('title').text(),
+        'search',
+        'must have correct title'
+      );
+      t.equals(
+        $('link[rel=canonical]').attr('href'),
+        '/search?q=quux',
+        'must have the appropriate cannonical url'
+      );
+      t.equals(
+        $('h1').text(),
+        'quux',
+        'must have correct h1'
+      );
+      t.equals(
+        $('h2').length,
+        0,
+        'must return no content'
+      );
+  });
+});
+
+test('routes-search: malicious search (all)', function(t) {
+  t.plan(5);
+
+  request(app)
+    .get('/search')
+    .query({ q: '<script>alert("xss")</script>' })
+    .expect('Content-Type', /html/)
+    .expect(200)
+    .end(function(err, res) {
+      t.notOk(err, 'expectations should be met');
+
+      const $ = cheerio.load(res.text);
+
+      t.equals(
+        $('meta[name=view]').attr('content'),
+        'search',
+        'must use the correct view'
+      );
+      t.equals(
+        $('title').text(),
+        'search',
+        'must have correct title'
+      );
+      t.equals(
+        $('h1').text(),
+        '&lt;script&gt;alert("xss")&lt;/script&gt;',
+        'must sanitize search query'
+      );
+      t.equals(
+        $('h2').length,
+        0,
+        'must return no posts'
+      );
+  });
+});

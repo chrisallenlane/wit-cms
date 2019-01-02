@@ -452,7 +452,6 @@ test('routes-async: pages by search (raw)', function(t) {
     });
 });
 
-
 test('routes-async: pages by search (paginated)', function(t) {
   t.plan(3);
 
@@ -469,6 +468,48 @@ test('routes-async: pages by search (paginated)', function(t) {
       t.ok(
         lodash.isEqual(Object.keys(json), [ 'pagination', 'pages' ]),
         'should return pages and pagination'
+      );
+    });
+});
+
+test('routes-async: pages and posts by search (raw)', function(t) {
+  t.plan(3);
+
+  request(app)
+    .get('/async/search?q=page')
+    .expect('Content-Type', /json/)
+    .expect(200)
+    .end(function(err, res) {
+      t.notOk(err, 'expectations should be met');
+
+      const json = JSON.parse(res.text);
+
+      // NB: we want to return 3 pages instead of 4 because page 4 has
+      // `searchable` set to `false`.
+      t.equals(json.posts.length, 3, 'should return appropriate posts');
+      t.ok(
+        lodash.isEqual(Object.keys(json), [ 'posts' ]),
+        'should return posts and pagination'
+      );
+    });
+});
+
+test('routes-async: pages and posts by search (paginated)', function(t) {
+  t.plan(3);
+
+  request(app)
+    .get('/async/search?q=third&p=1')
+    .expect('Content-Type', /json/)
+    .expect(200)
+    .end(function(err, res) {
+      t.notOk(err, 'expectations should be met');
+
+      const json = JSON.parse(res.text);
+
+      t.equals(json.posts.length, 2, 'should return appropriate posts');
+      t.ok(
+        lodash.isEqual(Object.keys(json), [ 'pagination', 'posts' ]),
+        'should return posts and pagination'
       );
     });
 });
