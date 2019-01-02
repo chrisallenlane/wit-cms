@@ -118,7 +118,9 @@ Routes
 - `/blog/tag/:tag`
 - `/blog/archive/:year/:month?/:day?`
 - `/blog/search`
+- `/search`
 - `/feed`
+- `/feed.xml`
 - `/sitemap.xml`
 
 ### Asynchronous ###
