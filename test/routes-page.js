@@ -13,7 +13,7 @@ test('routes-page: basic behavior', function(t) {
   t.plan(7);
 
   request(app)
-    .get('/page-1')
+    .get('/')
     .expect('Content-Type', /html/)
     .expect(200)
     .end(function(err, res) {
@@ -38,7 +38,7 @@ test('routes-page: basic behavior', function(t) {
       );
       t.equals(
         $('link[rel=canonical]').attr('href'),
-        '/page-1',
+        '/',
         'must have the appropriate cannonical url'
       );
       t.equals(

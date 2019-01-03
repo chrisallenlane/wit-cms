@@ -27,7 +27,7 @@ test('boot-pages: must properly structure pages', function(t) {
 
   // assert that each page has the correct properties
   t.equals(pages['page-1'].name        , 'page-1');
-  t.equals(pages['page-1'].url         , '/page-1');
+  t.equals(pages['page-1'].url         , '/');
   t.equals(pages['page-1'].title       , 'Page One');
   t.equals(pages['page-1'].description , 'This is the first page.');
   t.equals(pages['page-1'].content     , '<p>This is page one.</p>\n');

@@ -42,7 +42,7 @@ module.exports = function(configs) {
     if (configs.markdown.extensions.indexOf(extension)) {
 
       // assemble the page's URL
-      page.url = '/' + lodash.trimStart(page.url || page.name);
+      page.url = '/' + lodash.trimStart((page.url || page.name), '/');
 
       // read the file
       page.raw = fs.readFileSync(configs.pages.dir + file, 'utf8');

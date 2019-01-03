@@ -24,7 +24,7 @@ test('routes-sitemap: rss feed', function(t) {
 
       t.equals(
         $('urlset > url').first().find('loc').text(),
-        'https://example.com/page-1',
+        'https://example.com/',
         'must have the appropriate loc'
       );
       t.ok(
