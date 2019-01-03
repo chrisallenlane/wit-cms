@@ -36,7 +36,6 @@ module.exports = function(app, configsUser) {
   }
 
   // define routes
-  require('./routes-home')     (configs, app, wit);
   require('./routes-page')     (configs, app, wit);
   require('./routes-post')     (configs, app, wit);
   require('./routes-category') (configs, app, wit);
