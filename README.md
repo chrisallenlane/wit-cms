@@ -41,10 +41,10 @@ To install only the `wit-cms` module, run:
 `npm install wit-cms`
 
 To spare yourself the tedium of having to write boilerplate templating,
-however, it may be preferable to clone the `wit-bootstrap` repository and
+however, it may be preferable to clone the `wit-cms-bootstrap` repository and
 modify from there. This is the recommended approach for using `wit-cms`:
 
-https://github.com/wit-cms/wit-bootstrap
+https://github.com/wit-cms/wit-cms-bootstrap
 
 
 Creating Content
