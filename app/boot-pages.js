@@ -11,7 +11,7 @@ module.exports = function(configs) {
   var files   = [];
 
   // initialize the markdown parser
-  const remarkable = new Remarkable(configs.markdown.remarkable);
+  const remarkable = new Remarkable(configs.build.markdown.remarkable);
 
   // read the directory containing page files
   try {
@@ -39,7 +39,7 @@ module.exports = function(configs) {
     page.name       = path.basename(file, extension);
     
     // ignore non-markdown files
-    if (configs.markdown.extensions.indexOf(extension)) {
+    if (configs.build.markdown.extensions.indexOf(extension)) {
 
       // assemble the page's URL
       page.url = '/' + lodash.trimStart((page.url || page.name), '/');

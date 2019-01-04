@@ -12,7 +12,7 @@ module.exports = function(configs) {
   var files = [];
 
   // initialize the markdown parser
-  const remarkable = new Remarkable(configs.markdown.remarkable);
+  const remarkable = new Remarkable(configs.build.markdown.remarkable);
   
   // excerpt settings
   const truncateOptions = {
@@ -49,7 +49,7 @@ module.exports = function(configs) {
     post.name       = path.basename(file, extension);
     
     // ignore non-markdown files
-    if (configs.markdown.extensions.indexOf(extension)) {
+    if (configs.build.markdown.extensions.indexOf(extension)) {
 
       // assemble what will be the post's URL
       post.url  = '/blog/post/' + post.name;

@@ -3,38 +3,33 @@ const hljs = require('highlight.js');
 // set the default configs
 module.exports = {
 
-  // markdown configs
-  markdown: {
-    extensions: [ 'markdown', 'md' ], // markdown file extensions
-
-    // remarkable (markdown parser) configs
-    remarkable: {
-      html    : true,                 // allow html tags in source
-      linkify : true,                 // auto-link urls?
-
-      // implement code syntax-highlighting via highlightjs
-      highlight: function (str, lang) {
-        if (lang && hljs.getLanguage(lang)) {
-          try {
-            return hljs.highlight(lang, str).value;
-          } catch (err) {}
-        }
-        try {
-          return hljs.highlightAuto(str).value;
-        } catch (err) {}
-        return '';
-      }
-    },
-  },
-
-  // async routes
-  async: {
-    enabled : true,                    // enable async routes?
-    root    : '/async/',               // prefix at which async routes are available
-  },
-
   // build hooks
   build: {
+
+    // markdown configs
+    markdown: {
+      extensions: [ 'markdown', 'md' ], // markdown file extensions
+
+      // remarkable (markdown parser) configs
+      remarkable: {
+        html    : true,                 // allow html tags in source
+        linkify : true,                 // auto-link urls?
+
+        // implement code syntax-highlighting via highlightjs
+        highlight: function (str, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            try {
+              return hljs.highlight(lang, str).value;
+            } catch (err) {}
+          }
+          try {
+            return hljs.highlightAuto(str).value;
+          } catch (err) {}
+          return '';
+        }
+      },
+    },
+
     /*
     // function to invoke before initializing the wit object
     before: function (configs, app, wit) {
@@ -77,4 +72,9 @@ module.exports = {
     },
   },
 
+  // async routes
+  async: {
+    enabled : true,                    // enable async routes?
+    root    : '/async/',               // prefix at which async routes are available
+  },
 };
