@@ -298,6 +298,12 @@ Lastly - though this should go without saying - the `node` application should
 never be run as `root`.
 
 
+Upgrading
+---------
+`wit-cms@v5.0.0` is backwards-incompatible with prior versions. See [the
+wiki][wiki] for upgrading instructions.
+
+
 License
 -------
 `wit-cms` is released under the MIT license. See `LICENSE.txt` for details. 
@@ -309,5 +315,6 @@ License
 [isso]:              https://github.com/posativ/isso
 [json-front-matter]: https://www.npmjs.org/package/json-front-matter
 [lunr]:              https://www.npmjs.com/package/lunr
+[wiki]:              https://github.com/chrisallenlane/wit-cms/wiki/Upgrading-to-v5.0.0 
 [xss-owasp]:         https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
 [xss]:               https://www.npmjs.com/package/xss
