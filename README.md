@@ -38,7 +38,7 @@ Quick Start
 -----------
 To install only the `wit-cms` module, run:
 
-`npm install wit-cms`
+  npm install wit-cms
 
 To spare yourself the tedium of having to write boilerplate templating,
 however, it may be preferable to clone the `wit-cms-bootstrap` repository and
