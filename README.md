@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/wit-cms/wit-cms.svg)](https://travis-ci.org/wit-cms/wit-cms)
+[![Build Status](https://travis-ci.org/chrisallenlane/wit-cms.svg)](https://travis-ci.org/chrisallenlane/wit-cms)
 [![npm](https://img.shields.io/npm/v/wit-cms.svg)]()
 [![npm](https://img.shields.io/npm/dt/wit-cms.svg)]()
 
@@ -44,7 +44,7 @@ To spare yourself the tedium of having to write boilerplate templating,
 however, it may be preferable to clone the `wit-cms-bootstrap` repository and
 modify from there. This is the recommended approach for using `wit-cms`:
 
-https://github.com/wit-cms/wit-cms-bootstrap
+https://github.com/chrisallenlane/wit-cms-bootstrap
 
 
 Creating Content
